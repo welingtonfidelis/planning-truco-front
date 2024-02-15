@@ -1,0 +1,49 @@
+{
+  "components": {
+    "empty_state": {
+      "message": "Sem dados para mostra aqui."
+    },
+    "page_header": {
+      "menu_item_profile": "Perfil",
+      "menu_item_logout": "Sair",
+      "alert_title_logout": "Sair da sala",
+      "alert_description_logout": "Quer realmente sair da sala de votação?",
+      "current_task_message": "Votação atual"
+    },
+    "profile": {
+      "title": "Perfil",
+      "input_name": "Seu nome"
+    }
+  },
+  "pages": {
+    "not_found": {
+      "title_message": "Oops!",
+      "description_message": "Página não encontrada"
+    },
+    "login": {
+      "page_title": "Login",
+      "welcome_message": "Como quer ser chamado?",
+      "forgot_password_text": "Esqueceu sua senha? Clique aqui",
+      "error_request_message": "Algo deu errado. Por favor, verifique seu usuário/email e senha e tente novamente.",
+      "input_user_name": "Seu nome",
+      "input_user_name_invalid": "Nome inválido",
+      "button_login": "Entrar na sala",
+      "button_create_room": "Criar uma sala"
+    },
+    "voting_room": {
+      "page_title": "Sala de votos"
+    }
+  },
+  "generic": {
+    "button_save": "Salvar",
+    "button_cancel": "Cancelar",
+    "button_yes": "Sim",
+    "button_no": "Não",
+    "button_search": "Buscar",
+    "button_back": "Voltar",
+    "button_ok": "Ok",
+    "button_send": "Enviar",
+    "required_input_value": "Campo obrigatório",
+    "text_or": "Ou"
+  }
+}
