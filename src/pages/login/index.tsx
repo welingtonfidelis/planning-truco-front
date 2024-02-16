@@ -31,9 +31,9 @@ import { FormProps } from "./types";
 import { useLogin } from "../../services/requests/user";
 import { responseErrorHandler } from "../../shared/handlers/responseError";
 import { HttpServerMessageEnum } from "../../shared/enum/httpServerMessage";
-import { useEffect, useRef } from "react";
 import { isEmpty } from "lodash";
 import { roomStore } from "../../store/room";
+import { urlParams } from "../../services/util/urlParams";
 
 const { VOTING_ROOM } = ApplicationRoutes;
 const { INVALID_USERNAME_OR_EMAIL, INVALID_PASSWORD } = HttpServerMessageEnum;
@@ -50,19 +50,18 @@ export const Login = () => {
   const { updateUser } = userStore();
   const { updateRoom } = roomStore();
   const toast = useToast();
-  const params = new URLSearchParams(useLocation().search);
-  const roomId = params.get("room");
+  const {getParams} = urlParams();
+  const roomId = getParams('roomId') as string;
 
   const navigateToVotingRoom = (roomId: string) => {
     navigate({
       pathname: VOTING_ROOM,
-      search: createSearchParams({ id: roomId }).toString(),
+      search: createSearchParams({ roomId }).toString(),
     });
   };
 
   const handleSubmit = async (values: FormProps) => {
     if (!roomId) return;
-    console.log("values: ", values);
     // login(values, {
     //   onSuccess(data) {
     //     if (data) {
@@ -101,8 +100,6 @@ export const Login = () => {
   };
 
   const handleCreateRoom = (values: FormProps) => {
-    console.log("values: ", values);
-
     const user = { id: "123a", ...values };
     updateUser(user);
     updateRoom({ id: "321b", ownerUserId: user.id, users: [user, { id: "afav", name: "Fulano" }] });
