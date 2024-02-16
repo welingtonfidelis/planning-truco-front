@@ -5,6 +5,7 @@ import { roomStore } from "../../store/room";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { PageHeader } from "../../components/pageHeader";
+import { FloatActionButtons } from "./components/floatActionButtons";
 
 const { ROOT } = ApplicationRoutes;
 export const VotingRoom = () => {
@@ -23,6 +24,7 @@ export const VotingRoom = () => {
     <Container>
       <PageHeader />
     
+      <FloatActionButtons />
     </Container>
   );
 };

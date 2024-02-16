@@ -13,6 +13,9 @@
     "profile": {
       "title": "Perfil",
       "input_name": "Seu nome"
+    },
+    "float_action_buttons": {
+      "url_copied": "Link copiado, pode enviar para outro usuário."
     }
   },
   "pages": {
@@ -43,6 +46,7 @@
     "button_back": "Voltar",
     "button_ok": "Ok",
     "button_send": "Enviar",
+    "button_exit": "Sair",
     "required_input_value": "Campo obrigatório",
     "text_or": "Ou"
   }
