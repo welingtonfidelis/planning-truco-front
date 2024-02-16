@@ -6,7 +6,7 @@ const initialUserState: State = {
   ownerUserId: "",
   hideVotes: true,
   users: [],
-  currentTask: { name: '', points: 0 },
+  currentTask: { id: '', name: '', points: 0 },
   votedTasks: []
 };
 

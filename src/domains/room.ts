@@ -5,6 +5,7 @@ interface UserRoom extends User {
 }
 
 interface Task {
+  id: string;
   name: string;
   points: number;
 }
