@@ -1,10 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { parse, stringify } from "query-string";
 
-type GetParamsResponse = {
-  [key: string]: any;
-};
-
 type SetMultipleParams = {
   [key: string]: string | number;
 };
@@ -12,10 +8,10 @@ type SetMultipleParams = {
 export const urlParams = () => {
   const [_, setSearchParams] = useSearchParams();
 
-  const getParams = (key?: string): GetParamsResponse | undefined => {
+  const getParams = (key?: string) => {
     const parsedParams = parse(location.search);
 
-    if (key) return parsedParams[key] as GetParamsResponse;
+    if (key) return parsedParams[key]
 
     return parsedParams;
   };
