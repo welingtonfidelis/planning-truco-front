@@ -16,6 +16,13 @@
     },
     "float_action_buttons": {
       "url_copied": "Link copiado, pode enviar para outro usuário."
+    },
+    "drawer_tasks": {
+      "title": "Tarefas",
+      "vote_now": "Votar agora",
+      "voting": "Votando",
+      "input_task_name": "Título da tarefa",
+      "button_new_task": "Nova tarefa"
     }
   },
   "pages": {

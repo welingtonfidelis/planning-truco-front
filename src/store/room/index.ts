@@ -6,8 +6,8 @@ const initialUserState: State = {
   ownerUserId: "",
   hideVotes: true,
   users: [],
-  currentTask: { id: '', name: '', points: 0 },
-  votedTasks: []
+  currentTaskId: "",
+  tasks: [],
 };
 
 export const roomStore = create<State & Action>((set) => ({
@@ -17,6 +17,7 @@ export const roomStore = create<State & Action>((set) => ({
     set((state) => {
       return { ...state, ...data };
     }),
+    
   resetVotes: () =>
     set((state) => {
       return {
@@ -25,12 +26,24 @@ export const roomStore = create<State & Action>((set) => ({
         users: state.users.map((user) => ({ ...user, vote: null })),
       };
     }),
+
   addUser: (data) =>
     set((state) => {
       return { ...state, users: [...state.users, { ...data, vote: null }] };
     }),
+
   removeUser: (id) =>
     set((state) => {
       return { ...state, users: state.users.filter((user) => user.id !== id) };
+    }),
+
+  addTask: (data) =>
+    set((state) => {
+      return { ...state, tasks: [...state.tasks, data] };
+    }),
+
+  removeTask: (id) =>
+    set((state) => {
+      return { ...state, tasks: state.tasks.filter((user) => user.id !== id) };
     }),
 }));

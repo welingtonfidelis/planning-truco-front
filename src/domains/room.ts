@@ -1,13 +1,8 @@
+import { Task } from "./task";
 import { User } from "./user";
 
 interface UserRoom extends User {
   vote?: number | null;
-}
-
-interface Task {
-  id: string;
-  name: string;
-  points: number;
 }
 
 export interface Room {
@@ -15,6 +10,6 @@ export interface Room {
   ownerUserId: string;
   users: UserRoom[];
   hideVotes: boolean;
-  currentTask?: Task;
-  votedTasks: Task[];
+  currentTaskId: string;
+  tasks: Task[];
 }

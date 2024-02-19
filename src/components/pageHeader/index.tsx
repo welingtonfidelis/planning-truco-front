@@ -41,7 +41,7 @@ export const PageHeader = (props: Props) => {
     onClose: onCloseProfile,
   } = useDisclosure();
   const { id, name, clearUser } = userStore();
-  const { currentTask } = roomStore();
+  const { currentTaskId, tasks } = roomStore();
   const { logout } = useLogout();
   const navigate = useNavigate();
 
@@ -51,6 +51,8 @@ export const PageHeader = (props: Props) => {
     navigate(ROOT);
   };
 
+  const currentTask = tasks.find((task) => task.id === currentTaskId);
+
   return (
     <Container>
       <LogoContainer>
@@ -59,7 +61,7 @@ export const PageHeader = (props: Props) => {
         <TitleContainer>
           <span>{t("components.page_header.current_task_message")}:</span>
 
-          <span>{currentTask?.name ?? ""}</span>
+          <span>{currentTask?.name ?? "-"}</span>
         </TitleContainer>
       </LogoContainer>
 

@@ -1,4 +1,5 @@
 import { Room } from "../../domains/room";
+import { Task } from "../../domains/task";
 import { User } from "../../domains/user";
 
 export type State = & Room;
@@ -8,4 +9,6 @@ export type Action = {
   addUser: (data: User) => void;
   removeUser: (id: string) => void;
   resetVotes: () => void;
+  addTask: (data: Task) => void;
+  removeTask: (id: string) => void;
 };
