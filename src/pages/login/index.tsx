@@ -60,7 +60,7 @@ export const Login = () => {
     });
   };
 
-  const handleSubmit = async (values: FormProps) => {
+  const handleEnterExistingRoom = async (values: FormProps) => {
     if (!roomId) return;
     // login(values, {
     //   onSuccess(data) {
@@ -122,7 +122,7 @@ export const Login = () => {
           <Formik
             initialValues={initialFormValues}
             validationSchema={validateFormFields}
-            onSubmit={handleSubmit}
+            onSubmit={handleEnterExistingRoom}
           >
             {({ errors, touched, values, setTouched }) => (
               <Form>
