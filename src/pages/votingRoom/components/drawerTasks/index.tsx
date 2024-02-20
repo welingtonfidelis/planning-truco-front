@@ -21,17 +21,22 @@ import {
 import { roomStore } from "../../../../store/room";
 import { Field, Form, Formik } from "formik";
 import { formValidate } from "./helper/formValidate";
+import { userStore } from "../../../../store/user";
 
 export const DrawerTasks = (props: Props) => {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
-  const { currentTaskId, tasks, addTask, removeTask, updateRoom } = roomStore();
+  const { currentTaskId, tasks, ownerUserId, addTask, removeTask, updateRoom } =
+    roomStore();
+  const { id: userId } = userStore();
   const validateFormFields = formValidate();
   const {
     isOpen: isOpenNewTask,
     onOpen: onOpenNewTask,
     onClose: onCloseNewTask,
   } = useDisclosure();
+
+  const isLoggedUserOwnerRoom = userId === ownerUserId;
 
   const initialFormValues: FormProps = {
     name: "",
@@ -71,15 +76,17 @@ export const DrawerTasks = (props: Props) => {
               </LeftContent>
 
               <RightContent>
-                <CloseButtonContent>
-                  <CloseButton
-                    size="sm"
-                    onClick={() => handleRemoveTask(task.id)}
-                  />
-                </CloseButtonContent>
+                {isLoggedUserOwnerRoom && (
+                  <CloseButtonContent>
+                    <CloseButton
+                      size="sm"
+                      onClick={() => handleRemoveTask(task.id)}
+                    />
+                  </CloseButtonContent>
+                )}
 
                 <Button
-                  disabled={isCurrentTask}
+                  disabled={!isLoggedUserOwnerRoom || isCurrentTask}
                   colorScheme={isCurrentTask ? "gray" : "facebook"}
                   onClick={() => handleVoteNow(task.id)}
                 >
@@ -131,11 +138,13 @@ export const DrawerTasks = (props: Props) => {
             </Formik>
           </FormContainer>
         ) : (
-          <AddTaskButtonContent onClick={onOpenNewTask}>
-            <Button colorScheme="blue">
-              {t("components.drawer_tasks.button_new_task")}
-            </Button>
-          </AddTaskButtonContent>
+          isLoggedUserOwnerRoom && (
+            <AddTaskButtonContent onClick={onOpenNewTask}>
+              <Button colorScheme="blue">
+                {t("components.drawer_tasks.button_new_task")}
+              </Button>
+            </AddTaskButtonContent>
+          )
         )}
       </Container>
     </Drawer>
