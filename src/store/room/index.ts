@@ -4,7 +4,7 @@ import { State, Action } from "./types";
 const initialUserState: State = {
   id: "",
   ownerUserId: "",
-  hideVotes: true,
+  showVotes: false,
   users: [],
   currentTaskId: "",
   tasks: [],
@@ -22,7 +22,7 @@ export const roomStore = create<State & Action>((set) => ({
     set((state) => {
       return {
         ...state,
-        hideVotes: true,
+        showVotes: false,
         users: state.users.map((user) => ({ ...user, vote: null })),
       };
     }),

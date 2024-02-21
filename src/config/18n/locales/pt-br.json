@@ -41,7 +41,9 @@
       "button_create_room": "Criar uma sala"
     },
     "voting_room": {
-      "page_title": "Sala de votos"
+      "page_title": "Sala de votos",
+      "button_show_votes": "Virar cartas",
+      "button_reset_votes": "Reiniciar jogo"
     }
   },
   "generic": {
