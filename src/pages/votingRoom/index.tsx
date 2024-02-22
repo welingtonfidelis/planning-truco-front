@@ -9,8 +9,9 @@ import { FloatActionButtons } from "./components/floatActionButtons";
 import { User } from "../../domains/user";
 import { UserRoom } from "../../domains/room";
 import { UserCard } from "./components/userCard";
-import { Button } from "@chakra-ui/react";
+import { Button, background } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
+import { Deck } from "./components/deck";
 
 const { ROOT } = ApplicationRoutes;
 
@@ -20,6 +21,7 @@ enum ChairPositionEnum {
   BOTTOM = "bottom",
   LEFT = "left",
 }
+
 
 export const VotingRoom = () => {
   const navigate = useNavigate();
@@ -107,7 +109,7 @@ export const VotingRoom = () => {
           />
         </TableContent>
 
-        <div>test</div>
+        <Deck />
       </Content>
     </Container>
   );

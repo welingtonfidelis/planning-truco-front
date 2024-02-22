@@ -14,8 +14,8 @@ export const Content = styled.div`
 `;
 
 export const Card = styled.div<{ showVote: boolean }>`
-  height: 6rem;
-  width: 4rem;
+  height: 7rem;
+  width: 5rem;
   border-radius: 0.4rem;
   display: flex;
   justify-content: center;

@@ -21,8 +21,8 @@ export const TableContent = styled.div`
 `;
 
 export const TableIcon = styled.div`
-  width: 20rem;
-  height: 12rem;
+  width: 24rem;
+  height: 14rem;
   background-color: #30d98a;
   border-radius: 10px;
   border: 5px solid #8c3718;
