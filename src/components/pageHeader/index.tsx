@@ -14,9 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { ApplicationRoutes } from "../../shared/enum/applicationRoutes";
 import { userStore } from "../../store/user";
 import { AlertConfirm } from "../alertConfirm";
-import { IconButton } from "../iconButton";
-
-import { useLogout } from "../../services/requests/user";
 
 import { Container, LogoContainer, TitleContainer } from "./styles";
 import { Props } from "./types";
@@ -42,7 +39,6 @@ export const PageHeader = (props: Props) => {
   } = useDisclosure();
   const { id, name, clearUser } = userStore();
   const { currentTaskId, tasks } = roomStore();
-  const { logout } = useLogout();
   const navigate = useNavigate();
 
   const handleLogout = () => {

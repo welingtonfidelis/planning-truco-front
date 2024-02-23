@@ -17,10 +17,6 @@ import { formValidate } from "./helper/formValidate";
 import { HttpServerMessageEnum } from "../../../../shared/enum/httpServerMessage";
 import { FormProps, Props } from "./types";
 import { userStore } from "../../../../store/user";
-import {
-  useGetProfile,
-  useUpdateProfile,
-} from "../../../../services/requests/user";
 import { Modal } from "../../../modal";
 import { Preloader } from "../../../preloader";
 import { responseErrorHandler } from "../../../../shared/handlers/responseError";
@@ -31,7 +27,6 @@ export const Profile = (props: Props) => {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
   const { updateUser, name, id } = userStore();
-  const { updateProfile, isLoading: isUpdateLoading } = useUpdateProfile();
   const validateFormFields = formValidate();
   const toast = useToast();
   const formRef = useRef<any>();

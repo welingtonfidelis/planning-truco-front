@@ -34,7 +34,7 @@
       "page_title": "Login",
       "welcome_message": "Como quer ser chamado?",
       "forgot_password_text": "Esqueceu sua senha? Clique aqui",
-      "error_request_message": "Algo deu errado. Por favor, verifique seu usuário/email e senha e tente novamente.",
+      "error_request_message": "Algo deu errado. Por favor, verifique seu usuário e tente novamente.",
       "input_user_name": "Seu nome",
       "input_user_name_invalid": "Nome inválido",
       "button_login": "Entrar na sala",

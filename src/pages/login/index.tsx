@@ -1,8 +1,6 @@
 import {
   createSearchParams,
-  useLocation,
   useNavigate,
-  useSearchParams,
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Formik, Form, Field } from "formik";
@@ -28,15 +26,12 @@ import {
 import { formValidate } from "./helper/formValidate";
 import { userStore } from "../../store/user";
 import { FormProps } from "./types";
-import { useLogin } from "../../services/requests/user";
-import { responseErrorHandler } from "../../shared/handlers/responseError";
-import { HttpServerMessageEnum } from "../../shared/enum/httpServerMessage";
 import { isEmpty } from "lodash";
 import { roomStore } from "../../store/room";
 import { urlParams } from "../../services/util/urlParams";
+import { useCreateRoom } from "../../services/requests/room";
 
 const { VOTING_ROOM } = ApplicationRoutes;
-const { INVALID_USERNAME_OR_EMAIL, INVALID_PASSWORD } = HttpServerMessageEnum;
 
 const initialFormValues = {
   name: "",
@@ -46,12 +41,12 @@ export const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const validateFormFields = formValidate();
-  // const { login, isLoading } = useLogin();
+  const { create, isLoading } = useCreateRoom();
   const { updateUser } = userStore();
   const { updateRoom } = roomStore();
   const toast = useToast();
-  const {getParams} = urlParams();
-  const roomId = getParams('roomId') as string;
+  const { getParams } = urlParams();
+  const roomId = getParams("roomId") as string;
 
   const navigateToVotingRoom = (roomId: string) => {
     navigate({
@@ -62,49 +57,36 @@ export const Login = () => {
 
   const handleEnterExistingRoom = async (values: FormProps) => {
     if (!roomId) return;
-    // login(values, {
-    //   onSuccess(data) {
-    //     if (data) {
-    //       updateUser(data);
-    //       navigate(DASHBOARD);
-    //     }
-    //   },
-    //   onError(error) {
-    //     const { message } = responseErrorHandler(error);
 
-    //     if (message === INVALID_USERNAME_OR_EMAIL.message) {
-    //       actions.setErrors({
-    //         username: t("pages.login.input_user_email_invalid"),
-    //       });
-    //     }
-
-    //     if (message === INVALID_PASSWORD.message) {
-    //       actions.setErrors({
-    //         password: t("pages.login.input_password_invalid"),
-    //       });
-    //     }
-
-    //     toast({
-    //       title: t("pages.login.error_request_message"),
-    //       status: "error",
-    //       duration: null,
-    //     });
-    //   },
-    // });
-
-    const user = { id: "123a", ...values };
-    updateUser(user);
-    updateRoom({ id: roomId, ownerUserId: user.id, users: [user, { id: "afav", name: "Fulano" }] });
+    updateUser(values);
+    updateRoom({ id: roomId });
 
     navigateToVotingRoom(roomId);
   };
 
   const handleCreateRoom = (values: FormProps) => {
-    const user = { id: "123a", ...values };
-    updateUser(user);
-    updateRoom({ id: "321b", ownerUserId: user.id, users: [user, { id: "afav", name: "Fulano" }] });
+    create(
+      {},
+      {
+        onSuccess(data) {
+          console.log("data: ", data);
+          if (data) {
+            const { id } = data;
+            updateUser(values);
+            updateRoom({ id });
 
-    navigateToVotingRoom("321b");
+            navigateToVotingRoom(id);
+          }
+        },
+        onError(error) {
+          toast({
+            title: t("pages.login.error_request_message"),
+            status: "error",
+            duration: null,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -159,7 +141,7 @@ export const Login = () => {
 
                   <Button
                     colorScheme="green"
-                    isLoading={false}
+                    isLoading={isLoading}
                     width="100%"
                     type="button"
                     onClick={async () => {
