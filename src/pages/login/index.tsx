@@ -1,7 +1,4 @@
-import {
-  createSearchParams,
-  useNavigate,
-} from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Formik, Form, Field } from "formik";
 
@@ -72,6 +69,7 @@ export const Login = () => {
           console.log("data: ", data);
           if (data) {
             const { id } = data;
+
             updateUser(values);
             updateRoom({ id });
 

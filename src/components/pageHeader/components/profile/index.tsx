@@ -6,29 +6,20 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  useToast,
 } from "@chakra-ui/react";
 
-import {
-  AvatarContent,
-  AvatarIcon,
-} from "./styles";
+import { AvatarContent, AvatarIcon } from "./styles";
 import { formValidate } from "./helper/formValidate";
-import { HttpServerMessageEnum } from "../../../../shared/enum/httpServerMessage";
 import { FormProps, Props } from "./types";
 import { userStore } from "../../../../store/user";
 import { Modal } from "../../../modal";
 import { Preloader } from "../../../preloader";
-import { responseErrorHandler } from "../../../../shared/handlers/responseError";
-
-const { USERNAME_ALREADY_USED, EMAIL_ALREADY_USED } = HttpServerMessageEnum;
 
 export const Profile = (props: Props) => {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
   const { updateUser, name, id } = userStore();
   const validateFormFields = formValidate();
-  const toast = useToast();
   const formRef = useRef<any>();
 
   const initialFormValues = {
@@ -45,50 +36,6 @@ export const Profile = (props: Props) => {
   ) => {
     updateUser({ ...values });
     handleCloseModal();
-
-    // const formData = new FormData();
-
-    // Object.entries(values).forEach(([key, value]) => {
-    //   if (!FORM_VALUES_IGNORE.includes(key)) {
-    //     formData.set(key, value);
-    //   }
-    // });
-
-    // if (localProfileImage) formData.append("file", localProfileImage);
-
-    // if (deleteProfileImage) formData.append("delete_image", "true");
-
-    // updateProfile(formData as any, {
-    //   onSuccess() {
-    //     toast({
-    //       title: t("components.profile.success_request_message"),
-    //     });
-
-    //     handleCloseModal();
-
-    //     refetch();
-    //   },
-    //   onError(error) {
-    //     const { message } = responseErrorHandler(error);
-
-    //     if (message === USERNAME_ALREADY_USED.message) {
-    //       actions.setErrors({
-    //         username: t("components.profile.input_username_already_used"),
-    //       });
-    //     }
-
-    //     if (message === EMAIL_ALREADY_USED.message) {
-    //       actions.setErrors({
-    //         email: t("components.profile.input_email_already_used"),
-    //       });
-    //     }
-
-    //     toast({
-    //       title: t("components.profile.error_request_message"),
-    //       status: "error",
-    //     });
-    //   },
-    // });
   };
 
   return (

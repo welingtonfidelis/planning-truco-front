@@ -27,10 +27,14 @@ export const roomStore = create<State & Action>((set) => ({
       };
     }),
 
-  addUser: (data) =>
+  addUser: (data) => {
     set((state) => {
+      const userExists = state.users.some((user) => user.id === data.id);
+      if (userExists) return state;
+      
       return { ...state, users: [...state.users, { ...data, vote: null }] };
-    }),
+    })
+  },
 
   removeUser: (id) =>
     set((state) => {
