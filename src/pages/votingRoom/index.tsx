@@ -31,6 +31,7 @@ const {
   SERVER_ROOM_NEW_USER_OWN,
   SERVER_ROOM_NEW_TASK,
   SERVER_ROOM_DELETE_TASK,
+  SERVER_ROOM_SELECT_VOTING_TASK,
 } = SocketEvents;
 
 enum ChairPositionEnum {
@@ -138,6 +139,10 @@ export const VotingRoom = () => {
 
       socket.on(SERVER_ROOM_DELETE_TASK, (data: string) => {
         removeTask(data);
+      });
+
+      socket.on(SERVER_ROOM_SELECT_VOTING_TASK, (data: string) => {
+        updateRoom({ currentTaskId: data });
       });
 
       // EXCEPTION

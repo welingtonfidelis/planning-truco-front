@@ -24,7 +24,11 @@ import { formValidate } from "./helper/formValidate";
 import { SocketEvents } from "../../../../shared/enum/socketEvents";
 import { socketStore } from "../../../../store/socket";
 
-const { CLIENT_ROOM_NEW_TASK, CLIENT_ROOM_DELETE_TASK } = SocketEvents;
+const {
+  CLIENT_ROOM_NEW_TASK,
+  CLIENT_ROOM_DELETE_TASK,
+  CLIENT_ROOM_SELECT_VOTING_TASK,
+} = SocketEvents;
 
 export const DrawerTasks = (props: Props) => {
   const { isOpen, onClose } = props;
@@ -55,7 +59,7 @@ export const DrawerTasks = (props: Props) => {
   };
 
   const handleVoteNow = (id: string) => {
-    updateRoom({ currentTaskId: id });
+    socket?.emit(CLIENT_ROOM_SELECT_VOTING_TASK, id);
   };
 
   return (
@@ -86,15 +90,21 @@ export const DrawerTasks = (props: Props) => {
                   </CloseButtonContent>
                 )}
 
-                <Button
-                  disabled={!isLoggedUserOwnerRoom || isCurrentTask}
-                  colorScheme={isCurrentTask ? "gray" : "facebook"}
-                  onClick={() => handleVoteNow(task.id)}
-                >
-                  {isCurrentTask
-                    ? t("components.drawer_tasks.voting")
-                    : t("components.drawer_tasks.vote_now")}
-                </Button>
+                {isLoggedUserOwnerRoom ? (
+                  <Button
+                    disabled={isCurrentTask}
+                    colorScheme={isCurrentTask ? "gray" : "facebook"}
+                    onClick={() => handleVoteNow(task.id)}
+                  >
+                    {isCurrentTask
+                      ? t("components.drawer_tasks.voting")
+                      : t("components.drawer_tasks.vote_now")}
+                  </Button>
+                ) : (
+                  <span>
+                    {isCurrentTask && t("components.drawer_tasks.voting")}
+                  </span>
+                )}
               </RightContent>
             </ListContent>
           );
