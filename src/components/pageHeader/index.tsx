@@ -8,7 +8,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import { ApplicationRoutes } from "../../shared/enum/applicationRoutes";
@@ -38,7 +37,7 @@ export const PageHeader = (props: Props) => {
     onOpen: onOpenProfile,
     onClose: onCloseProfile,
   } = useDisclosure();
-  const { id, name, clearUser } = userStore();
+  const { name, clearUser } = userStore();
   const { currentTaskId, tasks } = roomStore();
   const { destroySocketConnection } = socketStore();
   const navigate = useNavigate();

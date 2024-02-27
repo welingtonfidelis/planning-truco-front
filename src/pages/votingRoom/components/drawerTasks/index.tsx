@@ -21,20 +21,17 @@ import {
 import { roomStore } from "../../../../store/room";
 import { Field, Form, Formik } from "formik";
 import { formValidate } from "./helper/formValidate";
-import { userStore } from "../../../../store/user";
+import { SocketEvents } from "../../../../shared/enum/socketEvents";
+import { socketStore } from "../../../../store/socket";
+
+const { CLIENT_ROOM_NEW_TASK, CLIENT_ROOM_DELETE_TASK } = SocketEvents;
 
 export const DrawerTasks = (props: Props) => {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
-  const {
-    currentTaskId,
-    tasks,
-    isLoggedUserOwnerRoom,
-    addTask,
-    removeTask,
-    updateRoom,
-  } = roomStore();
-  const { id: userId } = userStore();
+  const { currentTaskId, tasks, isLoggedUserOwnerRoom, updateRoom } =
+    roomStore();
+  const { socket } = socketStore();
   const validateFormFields = formValidate();
   const {
     isOpen: isOpenNewTask,
@@ -47,14 +44,14 @@ export const DrawerTasks = (props: Props) => {
   };
 
   const handleAddTask = (values: FormProps) => {
-    console.log("values: ", values);
+    const newTask = { ...values, points: 0 };
+    socket?.emit(CLIENT_ROOM_NEW_TASK, newTask);
 
-    addTask({ ...values, id: new Date().getTime().toString(), points: 0 });
     onCloseNewTask();
   };
 
   const handleRemoveTask = (id: string) => {
-    removeTask(id);
+    socket?.emit(CLIENT_ROOM_DELETE_TASK, id);
   };
 
   const handleVoteNow = (id: string) => {

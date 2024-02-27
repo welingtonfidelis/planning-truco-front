@@ -19,15 +19,18 @@ import { ServerError } from "../../shared/enum/serverError";
 import { urlParams } from "../../services/util/urlParams";
 import { SocketEvents } from "../../shared/enum/socketEvents";
 import { socketStore } from "../../store/socket";
+import { Task } from "../../domains/task";
 
 const { ROOT } = ApplicationRoutes;
 const { INVALID_ROOM, MISSING_ROOM } = ServerError;
 const {
   EXCEPTION,
-  ROOM_DATA,
-  ROOM_NEW_USER,
-  ROOM_USER_LOGOUT,
-  ROOM_NEW_USER_OWN,
+  SERVER_ROOM_DATA,
+  SERVER_ROOM_NEW_USER,
+  SERVER_ROOM_USER_LOGOUT,
+  SERVER_ROOM_NEW_USER_OWN,
+  SERVER_ROOM_NEW_TASK,
+  SERVER_ROOM_DELETE_TASK,
 } = SocketEvents;
 
 enum ChairPositionEnum {
@@ -53,6 +56,8 @@ export const VotingRoom = () => {
     addUser,
     removeUser,
     isLoggedUserOwnerRoom,
+    addTask,
+    removeTask,
   } = roomStore();
   const { socket, createSocketConnection } = socketStore();
 
@@ -104,26 +109,38 @@ export const VotingRoom = () => {
     socket.on("connect", () => {
       updateUser({ id: socket.id });
 
-      socket.on(ROOM_DATA, (data: Room) => {
+      // ROOM
+      socket.on(SERVER_ROOM_DATA, (data: Room) => {
         const isLoggedUserOwnerRoom = socket.id === data.ownerUserId;
 
         updateRoom({ ...data, isLoggedUserOwnerRoom });
       });
 
-      socket.on(ROOM_NEW_USER, (data: User) => {
+      // USER
+      socket.on(SERVER_ROOM_NEW_USER, (data: User) => {
         addUser(data);
       });
 
-      socket.on(ROOM_USER_LOGOUT, (data: string) => {
+      socket.on(SERVER_ROOM_USER_LOGOUT, (data: string) => {
         removeUser(data);
       });
 
-      socket.on(ROOM_NEW_USER_OWN, (data: string) => {
+      socket.on(SERVER_ROOM_NEW_USER_OWN, (data: string) => {
         const isLoggedUserOwnerRoom = socket.id === data;
 
         updateRoom({ ownerUserId: data, isLoggedUserOwnerRoom });
       });
 
+      // TASK
+      socket.on(SERVER_ROOM_NEW_TASK, (data: Task) => {
+        addTask(data);
+      });
+
+      socket.on(SERVER_ROOM_DELETE_TASK, (data: string) => {
+        removeTask(data);
+      });
+
+      // EXCEPTION
       socket.on(EXCEPTION, (data: KnownError) => {
         console.log("data: ", data.name);
 
