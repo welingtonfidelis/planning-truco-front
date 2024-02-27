@@ -21,6 +21,7 @@ import { Profile } from "./components/profile";
 
 import logoImage from "../../assets/logo.png";
 import { roomStore } from "../../store/room";
+import { socketStore } from "../../store/socket";
 
 const { ROOT } = ApplicationRoutes;
 
@@ -39,11 +40,12 @@ export const PageHeader = (props: Props) => {
   } = useDisclosure();
   const { id, name, clearUser } = userStore();
   const { currentTaskId, tasks } = roomStore();
+  const { destroySocketConnection } = socketStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     clearUser();
-    // logout();
+    destroySocketConnection();
     navigate(ROOT);
   };
 

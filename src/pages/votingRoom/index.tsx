@@ -18,6 +18,7 @@ import { KnownError } from "../../domains/knownError";
 import { ServerError } from "../../shared/enum/serverError";
 import { urlParams } from "../../services/util/urlParams";
 import { SocketEvents } from "../../shared/enum/socketEvents";
+import { socketStore } from "../../store/socket";
 
 const { ROOT } = ApplicationRoutes;
 const { INVALID_ROOM, MISSING_ROOM } = ServerError;
@@ -26,6 +27,7 @@ const {
   ROOM_DATA,
   ROOM_NEW_USER,
   ROOM_USER_LOGOUT,
+  ROOM_NEW_USER_OWN,
 } = SocketEvents;
 
 enum ChairPositionEnum {
@@ -41,7 +43,7 @@ export const VotingRoom = () => {
   const { getParams } = urlParams();
   const toast = useToast();
 
-  const { id: userId, name: userName } = userStore();
+  const { id: userId, name: userName, updateUser } = userStore();
   const {
     id: roomId,
     showVotes,
@@ -50,9 +52,9 @@ export const VotingRoom = () => {
     users: usersOnRoom,
     addUser,
     removeUser,
+    isLoggedUserOwnerRoom,
   } = roomStore();
-
-  let socketIo: Socket;
+  const { socket, createSocketConnection } = socketStore();
 
   const chairOrganize = usersOnRoom.reduce(
     (acc, user) => {
@@ -89,26 +91,40 @@ export const VotingRoom = () => {
       return;
     }
 
-    socketIo = io(config.REST_API_URL, {
-      query: { userName, roomId },
-    });
+    createSocketConnection(
+      io(config.REST_API_URL, {
+        query: { userName, roomId },
+      })
+    );
+  }, []);
 
-    socketIo.on("connect", () => {
-      socketIo.on(ROOM_DATA, (data: Room) => {
-        updateRoom(data);
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("connect", () => {
+      updateUser({ id: socket.id });
+
+      socket.on(ROOM_DATA, (data: Room) => {
+        const isLoggedUserOwnerRoom = socket.id === data.ownerUserId;
+
+        updateRoom({ ...data, isLoggedUserOwnerRoom });
       });
 
-      socketIo.on(ROOM_NEW_USER, (data: User) => {
-        console.log("data: ", data);
+      socket.on(ROOM_NEW_USER, (data: User) => {
         addUser(data);
       });
 
-      socketIo.on(ROOM_USER_LOGOUT, (data: string) => {
-        console.log("data: ", data);
+      socket.on(ROOM_USER_LOGOUT, (data: string) => {
         removeUser(data);
       });
 
-      socketIo.on(EXCEPTION, (data: KnownError) => {
+      socket.on(ROOM_NEW_USER_OWN, (data: string) => {
+        const isLoggedUserOwnerRoom = socket.id === data;
+
+        updateRoom({ ownerUserId: data, isLoggedUserOwnerRoom });
+      });
+
+      socket.on(EXCEPTION, (data: KnownError) => {
         console.log("data: ", data.name);
 
         if (
@@ -125,7 +141,7 @@ export const VotingRoom = () => {
         }
       });
     });
-  }, []);
+  }, [socket]);
 
   return (
     <Container>
@@ -144,15 +160,24 @@ export const VotingRoom = () => {
           />
 
           <TableIcon>
-            {showVotes ? (
-              <Button colorScheme="blue" onClick={() => handleShowVotes(false)}>
-                {t("pages.voting_room.button_reset_votes")}
-              </Button>
-            ) : (
-              <Button colorScheme="blue" onClick={() => handleShowVotes(true)}>
-                {t("pages.voting_room.button_show_votes")}
-              </Button>
-            )}
+            {isLoggedUserOwnerRoom &&
+              (showVotes ? (
+                <Button
+                  colorScheme="blue"
+                  onClick={() => handleShowVotes(false)}
+                  disabled={!isLoggedUserOwnerRoom}
+                >
+                  {t("pages.voting_room.button_reset_votes")}
+                </Button>
+              ) : (
+                <Button
+                  colorScheme="blue"
+                  onClick={() => handleShowVotes(true)}
+                  disabled={!isLoggedUserOwnerRoom}
+                >
+                  {t("pages.voting_room.button_show_votes")}
+                </Button>
+              ))}
           </TableIcon>
 
           <UserCard

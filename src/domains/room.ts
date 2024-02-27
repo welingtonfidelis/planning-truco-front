@@ -8,6 +8,7 @@ export interface UserRoom extends User {
 export interface Room {
   id: string;
   ownerUserId: string;
+  isLoggedUserOwnerRoom: boolean;
   users: UserRoom[];
   showVotes: boolean;
   currentTaskId: string;

@@ -26,8 +26,14 @@ import { userStore } from "../../../../store/user";
 export const DrawerTasks = (props: Props) => {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
-  const { currentTaskId, tasks, ownerUserId, addTask, removeTask, updateRoom } =
-    roomStore();
+  const {
+    currentTaskId,
+    tasks,
+    isLoggedUserOwnerRoom,
+    addTask,
+    removeTask,
+    updateRoom,
+  } = roomStore();
   const { id: userId } = userStore();
   const validateFormFields = formValidate();
   const {
@@ -35,8 +41,6 @@ export const DrawerTasks = (props: Props) => {
     onOpen: onOpenNewTask,
     onClose: onCloseNewTask,
   } = useDisclosure();
-
-  const isLoggedUserOwnerRoom = userId === ownerUserId;
 
   const initialFormValues: FormProps = {
     name: "",

@@ -4,6 +4,7 @@ import { State, Action } from "./types";
 const initialUserState: State = {
   id: "",
   ownerUserId: "",
+  isLoggedUserOwnerRoom: false,
   showVotes: false,
   users: [],
   currentTaskId: "",
