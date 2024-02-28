@@ -6,13 +6,13 @@ export const Container = styled.div`
   margin: 0.5rem;
 `;
 
-export const CardContent = styled.div<{ totalCards: number }>`
+export const CardContent = styled.div<{ totalCards: number, isSelected: boolean }>`
   height: 9rem;
   width: calc(100% / ${(props) => props.totalCards});
   margin: 0 0.2rem;
   border: 2px solid ${(props) => props.theme.colors.primary};
-  background: #fff;
   transition: 0.5s;
+  background: ${(props) => props.isSelected ? `radial-gradient(circle, ${props.theme.colors.success} 40%, ${props.theme.colors.primary});` : '#fff'};
   border-radius: 0.4rem;
   display: flex;
   align-items: center;

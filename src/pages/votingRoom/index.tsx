@@ -32,6 +32,9 @@ const {
   SERVER_ROOM_NEW_TASK,
   SERVER_ROOM_DELETE_TASK,
   SERVER_ROOM_SELECT_VOTING_TASK,
+  SERVER_ROOM_VOTE_TASK,
+  CLIENT_ROOM_SHOW_HIDE_VOTES,
+  SERVER_ROOM_SHOW_HIDE_VOTES,
 } = SocketEvents;
 
 enum ChairPositionEnum {
@@ -47,22 +50,23 @@ export const VotingRoom = () => {
   const { getParams } = urlParams();
   const toast = useToast();
 
-  const { id: userId, name: userName, updateUser } = userStore();
+  const { name: userName, updateUser } = userStore();
   const {
     id: roomId,
     showVotes,
     ownerUserId,
     updateRoom,
-    users: usersOnRoom,
+    users: usersOnStorage,
     addUser,
     removeUser,
     isLoggedUserOwnerRoom,
     addTask,
     removeTask,
+    userVoteTask,
   } = roomStore();
   const { socket, createSocketConnection } = socketStore();
 
-  const chairOrganize = usersOnRoom.reduce(
+  const chairOrganize = usersOnStorage.reduce(
     (acc, user) => {
       if (user.id === ownerUserId) acc[ChairPositionEnum.TOP].push(user);
       else acc[ChairPositionEnum.BOTTOM].push(user);
@@ -76,7 +80,7 @@ export const VotingRoom = () => {
   );
 
   const handleShowVotes = (showVotes: boolean) => {
-    updateRoom({ showVotes });
+    socket?.emit(CLIENT_ROOM_SHOW_HIDE_VOTES, showVotes);
   };
 
   useEffect(() => {
@@ -117,7 +121,7 @@ export const VotingRoom = () => {
         updateRoom({ ...data, isLoggedUserOwnerRoom });
       });
 
-      // USER
+      // USERS
       socket.on(SERVER_ROOM_NEW_USER, (data: User) => {
         addUser(data);
       });
@@ -132,7 +136,7 @@ export const VotingRoom = () => {
         updateRoom({ ownerUserId: data, isLoggedUserOwnerRoom });
       });
 
-      // TASK
+      // TASKS
       socket.on(SERVER_ROOM_NEW_TASK, (data: Task) => {
         addTask(data);
       });
@@ -141,14 +145,36 @@ export const VotingRoom = () => {
         removeTask(data);
       });
 
+      // VOTES
       socket.on(SERVER_ROOM_SELECT_VOTING_TASK, (data: string) => {
         updateRoom({ currentTaskId: data });
       });
 
+      socket.on(
+        SERVER_ROOM_SHOW_HIDE_VOTES,
+        (data: { tasks?: Task[]; users?: User[]; showVotes: boolean }) => {
+          const { showVotes, tasks, users } = data;
+
+          if (tasks) updateRoom({ tasks });
+          if (users) updateRoom({ users });
+
+          updateRoom({
+            showVotes,
+          });
+        }
+      );
+
+      socket.on(
+        SERVER_ROOM_VOTE_TASK,
+        (data: { userId: string; vote: number }) => {
+          const { userId, vote } = data;
+
+          userVoteTask(userId, vote);
+        }
+      );
+
       // EXCEPTION
       socket.on(EXCEPTION, (data: KnownError) => {
-        console.log("data: ", data.name);
-
         if (
           data.name === MISSING_ROOM.name ||
           data.name === INVALID_ROOM.name

@@ -10,7 +10,7 @@ export const light = {
     separator:"#e2e8f0",
 
     error: "#ec1111",
-    success: "#0fc000",
+    success: "#30d98a",
     warning: "#e9ee09",
   },
   size: {
@@ -30,7 +30,7 @@ export const dark = {
     tertiary: "#22d1ee", 
 
     error: "#ec1111",
-    success: "#0fc000",
+    success: "#30d98a",
     warning: "#e9ee09",
   }
 }

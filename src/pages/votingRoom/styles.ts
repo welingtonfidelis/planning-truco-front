@@ -23,7 +23,7 @@ export const TableContent = styled.div`
 export const TableIcon = styled.div`
   width: 24rem;
   height: 14rem;
-  background-color: #30d98a;
+  background-color: ${(props) => props.theme.colors.success};
   border-radius: 10px;
   border: 5px solid #8c3718;
   margin: 0.5rem;

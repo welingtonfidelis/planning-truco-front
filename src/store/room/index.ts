@@ -18,7 +18,7 @@ export const roomStore = create<State & Action>((set) => ({
     set((state) => {
       return { ...state, ...data };
     }),
-    
+
   resetVotes: () =>
     set((state) => {
       return {
@@ -32,9 +32,9 @@ export const roomStore = create<State & Action>((set) => ({
     set((state) => {
       const userExists = state.users.some((user) => user.id === data.id);
       if (userExists) return state;
-      
+
       return { ...state, users: [...state.users, { ...data, vote: null }] };
-    })
+    });
   },
 
   removeUser: (id) =>
@@ -50,5 +50,21 @@ export const roomStore = create<State & Action>((set) => ({
   removeTask: (id) =>
     set((state) => {
       return { ...state, tasks: state.tasks.filter((user) => user.id !== id) };
+    }),
+
+  userVoteTask: (userId, vote) =>
+    set((state) => {
+      const updatedUsers = state.users.map((user) => {
+        if (user.id === userId) {
+          return {
+            ...user,
+            vote,
+          };
+        }
+
+        return user;
+      });
+
+      return { ...state, users: updatedUsers };
     }),
 }));

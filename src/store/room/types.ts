@@ -11,4 +11,5 @@ export type Action = {
   resetVotes: () => void;
   addTask: (data: Task) => void;
   removeTask: (id: string) => void;
+  userVoteTask: (userId: string, vote: number) => void;
 };

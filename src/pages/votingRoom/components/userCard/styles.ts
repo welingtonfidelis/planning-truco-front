@@ -13,7 +13,7 @@ export const Content = styled.div`
   align-items: center;
 `;
 
-export const Card = styled.div<{ showVote: boolean }>`
+export const Card = styled.div<{ showVote: boolean; alreadyVoted: boolean }>`
   height: 7rem;
   width: 5rem;
   border-radius: 0.4rem;
@@ -21,7 +21,11 @@ export const Card = styled.div<{ showVote: boolean }>`
   justify-content: center;
   align-items: center;
   background: ${(props) =>
-    props.showVote ? props.theme.colors.primary : props.theme.colors.separator};
+    props.showVote
+      ? props.theme.colors.primary
+      : props.alreadyVoted
+      ? `radial-gradient(circle, ${props.theme.colors.primary} 40%, ${props.theme.colors.success});`
+      : props.theme.colors.separator};
 `;
 
 export const UserVote = styled.span`
