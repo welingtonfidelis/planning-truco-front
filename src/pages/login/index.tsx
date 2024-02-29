@@ -27,12 +27,12 @@ import { isEmpty } from "lodash";
 import { roomStore } from "../../store/room";
 import { urlParams } from "../../services/util/urlParams";
 import { useCreateRoom } from "../../services/requests/room";
+import { storage } from "../../services/storage";
+import { ApplicationStorage } from "../../shared/enum/applicationStorage";
+import { useMemo } from "react";
 
 const { VOTING_ROOM } = ApplicationRoutes;
-
-const initialFormValues = {
-  name: "",
-};
+const { USER } = ApplicationStorage;
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -43,7 +43,16 @@ export const Login = () => {
   const { updateRoom } = roomStore();
   const toast = useToast();
   const { getParams } = urlParams();
+  const { get, set } = storage();
   const roomId = getParams("roomId") as string;
+  
+  const storedUser = get(USER);
+  
+  const initialFormValues = useMemo(() => {
+    return {
+      name: storedUser.name ?? "",
+    };
+  }, []);
 
   const navigateToVotingRoom = (roomId: string) => {
     navigate({
@@ -55,6 +64,7 @@ export const Login = () => {
   const handleEnterExistingRoom = async (values: FormProps) => {
     if (!roomId) return;
 
+    set(USER, values);
     updateUser(values);
     updateRoom({ id: roomId });
 
@@ -69,6 +79,7 @@ export const Login = () => {
           if (data) {
             const { id } = data;
 
+            set(USER, values);
             updateUser(values);
             updateRoom({ id });
 
