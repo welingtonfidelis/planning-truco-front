@@ -14,11 +14,16 @@ import { FormProps, Props } from "./types";
 import { userStore } from "../../../../store/user";
 import { Modal } from "../../../modal";
 import { Preloader } from "../../../preloader";
+import { SocketEvents } from "../../../../shared/enum/socketEvents";
+import { socketStore } from "../../../../store/socket";
+
+const { CLIENT_USER_UPDATE_PROFILE } = SocketEvents;
 
 export const Profile = (props: Props) => {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
   const { updateUser, name, id } = userStore();
+  const { socket } = socketStore();
   const validateFormFields = formValidate();
   const formRef = useRef<any>();
 
@@ -34,7 +39,8 @@ export const Profile = (props: Props) => {
     values: FormProps,
     actions: FormikHelpers<FormProps>
   ) => {
-    updateUser({ ...values });
+    socket?.emit(CLIENT_USER_UPDATE_PROFILE, { id, ...values });
+
     handleCloseModal();
   };
 

@@ -12,4 +12,5 @@ export type Action = {
   addTask: (data: Task) => void;
   removeTask: (id: string) => void;
   userVoteTask: (userId: string, vote: number) => void;
+  updateUserProfile: (userId: string, data: Partial<User>) => void;
 };

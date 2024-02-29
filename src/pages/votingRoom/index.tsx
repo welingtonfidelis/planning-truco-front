@@ -15,7 +15,7 @@ import { Deck } from "./components/deck";
 import { Socket, io } from "socket.io-client";
 import { config } from "../../config";
 import { KnownError } from "../../domains/knownError";
-import { ServerError } from "../../shared/enum/serverError";
+import { ServerError } from "../../shared/const/serverError";
 import { urlParams } from "../../services/util/urlParams";
 import { SocketEvents } from "../../shared/enum/socketEvents";
 import { socketStore } from "../../store/socket";
@@ -35,6 +35,7 @@ const {
   SERVER_ROOM_VOTE_TASK,
   CLIENT_ROOM_SHOW_HIDE_VOTES,
   SERVER_ROOM_SHOW_HIDE_VOTES,
+  SERVER_USER_UPDATE_PROFILE,
 } = SocketEvents;
 
 enum ChairPositionEnum {
@@ -63,6 +64,7 @@ export const VotingRoom = () => {
     addTask,
     removeTask,
     userVoteTask,
+    updateUserProfile,
   } = roomStore();
   const { socket, createSocketConnection } = socketStore();
 
@@ -146,9 +148,18 @@ export const VotingRoom = () => {
       });
 
       // VOTES
-      socket.on(SERVER_ROOM_SELECT_VOTING_TASK, (data: string) => {
-        updateRoom({ currentTaskId: data });
-      });
+      socket.on(
+        SERVER_ROOM_SELECT_VOTING_TASK,
+        (data: {
+          currentTaskId: string;
+          users: User[];
+          showVotes: boolean;
+        }) => {
+          const { currentTaskId, users, showVotes } = data;
+
+          updateRoom({ currentTaskId, users, showVotes });
+        }
+      );
 
       socket.on(
         SERVER_ROOM_SHOW_HIDE_VOTES,
@@ -170,6 +181,16 @@ export const VotingRoom = () => {
           const { userId, vote } = data;
 
           userVoteTask(userId, vote);
+        }
+      );
+
+      // USERS
+      socket.on(
+        SERVER_USER_UPDATE_PROFILE,
+        (data: { userId: string; profileData: Partial<User> }) => {
+          const { userId, profileData } = data;
+
+          updateUserProfile(userId, profileData);
         }
       );
 

@@ -67,4 +67,19 @@ export const roomStore = create<State & Action>((set) => ({
 
       return { ...state, users: updatedUsers };
     }),
+
+  updateUserProfile: (userId, data) =>
+    set((state) => {
+      const updatedUsers = state.users.map((user) => {
+        if (user.id === userId) {
+          return {
+            ...user,
+            ...data,
+          };
+        }
+
+        return user;
+      });
+      return { ...state, users: updatedUsers };
+    }),
 }));
