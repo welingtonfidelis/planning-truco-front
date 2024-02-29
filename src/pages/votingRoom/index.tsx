@@ -33,9 +33,11 @@ const {
   SERVER_ROOM_DELETE_TASK,
   SERVER_ROOM_SELECT_VOTING_TASK,
   SERVER_ROOM_VOTE_TASK,
-  CLIENT_ROOM_SHOW_HIDE_VOTES,
-  SERVER_ROOM_SHOW_HIDE_VOTES,
+  SERVER_ROOM_SHOW_VOTES,
+  SERVER_ROOM_RESET_VOTES,
   SERVER_USER_UPDATE_PROFILE,
+  CLIENT_ROOM_SHOW_VOTES,
+  CLIENT_ROOM_RESET_VOTES,
 } = SocketEvents;
 
 enum ChairPositionEnum {
@@ -65,6 +67,9 @@ export const VotingRoom = () => {
     removeTask,
     userVoteTask,
     updateUserProfile,
+    updateCurrentTask,
+    showUserVotes,
+    resetVotes,
   } = roomStore();
   const { socket, createSocketConnection } = socketStore();
 
@@ -82,7 +87,9 @@ export const VotingRoom = () => {
   );
 
   const handleShowVotes = (showVotes: boolean) => {
-    socket?.emit(CLIENT_ROOM_SHOW_HIDE_VOTES, showVotes);
+    if (showVotes) return socket?.emit(CLIENT_ROOM_SHOW_VOTES);
+
+    socket?.emit(CLIENT_ROOM_RESET_VOTES);
   };
 
   useEffect(() => {
@@ -148,32 +155,19 @@ export const VotingRoom = () => {
       });
 
       // VOTES
-      socket.on(
-        SERVER_ROOM_SELECT_VOTING_TASK,
-        (data: {
-          currentTaskId: string;
-          users: User[];
-          showVotes: boolean;
-        }) => {
-          const { currentTaskId, users, showVotes } = data;
+      socket.on(SERVER_ROOM_SELECT_VOTING_TASK, (data: string) => {
+        updateCurrentTask(data);
+      });
 
-          updateRoom({ currentTaskId, users, showVotes });
-        }
-      );
+      socket.on(SERVER_ROOM_SHOW_VOTES, (data: { points: number }) => {
+        const { points } = data;
 
-      socket.on(
-        SERVER_ROOM_SHOW_HIDE_VOTES,
-        (data: { tasks?: Task[]; users?: User[]; showVotes: boolean }) => {
-          const { showVotes, tasks, users } = data;
+        showUserVotes(points);
+      });
 
-          if (tasks) updateRoom({ tasks });
-          if (users) updateRoom({ users });
-
-          updateRoom({
-            showVotes,
-          });
-        }
-      );
+      socket.on(SERVER_ROOM_RESET_VOTES, () => {
+        resetVotes();
+      });
 
       socket.on(
         SERVER_ROOM_VOTE_TASK,

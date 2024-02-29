@@ -22,7 +22,7 @@ const { CLIENT_USER_UPDATE_PROFILE } = SocketEvents;
 export const Profile = (props: Props) => {
   const { isOpen, onClose } = props;
   const { t } = useTranslation();
-  const { updateUser, name, id } = userStore();
+  const { name, id } = userStore();
   const { socket } = socketStore();
   const validateFormFields = formValidate();
   const formRef = useRef<any>();

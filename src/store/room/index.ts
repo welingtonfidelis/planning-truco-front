@@ -19,12 +19,46 @@ export const roomStore = create<State & Action>((set) => ({
       return { ...state, ...data };
     }),
 
+  showUserVotes: (taskPoints) =>
+    set((state) => {
+      const updatedTasks = state.tasks.map((task) => {
+        if (task.id === state.currentTaskId) {
+          return {
+            ...task,
+            points: taskPoints,
+          };
+        }
+
+        return task;
+      });
+
+      return {
+        ...state,
+        showVotes: true,
+        tasks: updatedTasks,
+      };
+    }),
+
   resetVotes: () =>
     set((state) => {
+      const updatedTasks = state.tasks.map((task) => {
+        if (task.id === state.currentTaskId) {
+          return {
+            ...task,
+            points: 0,
+          };
+        }
+
+        return task;
+      });
+
+      const updatedUsers = state.users.map((user) => ({ ...user, vote: null }));
+
       return {
         ...state,
         showVotes: false,
-        users: state.users.map((user) => ({ ...user, vote: null })),
+        tasks: updatedTasks,
+        users: updatedUsers,
       };
     }),
 
@@ -47,6 +81,17 @@ export const roomStore = create<State & Action>((set) => ({
       return { ...state, tasks: [...state.tasks, data] };
     }),
 
+  updateCurrentTask: (taskId) =>
+    set((state) => {
+      const updatedUsers = state.users.map((user) => ({ ...user, vote: null }));
+
+      return {
+        ...state,
+        showVotes: false,
+        currentTaskId: taskId,
+        users: updatedUsers,
+      };
+    }),
   removeTask: (id) =>
     set((state) => {
       return { ...state, tasks: state.tasks.filter((user) => user.id !== id) };
