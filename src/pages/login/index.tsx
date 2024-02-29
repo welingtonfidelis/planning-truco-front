@@ -66,7 +66,6 @@ export const Login = () => {
       {},
       {
         onSuccess(data) {
-          console.log("data: ", data);
           if (data) {
             const { id } = data;
 
