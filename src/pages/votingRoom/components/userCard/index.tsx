@@ -4,7 +4,6 @@ import { Props } from "./types";
 
 export const UserCard = (props: Props) => {
   const { users, showVotes } = props;
-  console.log('users: ', users);
 
   return (
     <Container>
