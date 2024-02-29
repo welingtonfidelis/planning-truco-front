@@ -45,9 +45,9 @@ export const Login = () => {
   const { getParams } = urlParams();
   const { get, set } = storage();
   const roomId = getParams("roomId") as string;
-  
+
   const storedUser = get(USER);
-  
+
   const initialFormValues = useMemo(() => {
     return {
       name: storedUser.name ?? "",
@@ -114,8 +114,18 @@ export const Login = () => {
             validationSchema={validateFormFields}
             onSubmit={handleEnterExistingRoom}
           >
-            {({ errors, touched, values, setTouched }) => (
-              <Form>
+            {({ errors, touched, values, setTouched, submitForm }) => (
+              <Form
+                onKeyDown={async (e) => {
+                  if (e.key === "Enter") {
+                    if (roomId) return submitForm();
+
+                    await setTouched({ name: true }).then((e) => {
+                      if (isEmpty(e)) handleCreateRoom(values);
+                    });
+                  }
+                }}
+              >
                 <Field name="name">
                   {({ field }: any) => (
                     <FormControl
