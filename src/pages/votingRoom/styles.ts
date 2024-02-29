@@ -30,4 +30,8 @@ export const TableIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-height: 700px) {
+    height: 10rem;
+  }
 `;

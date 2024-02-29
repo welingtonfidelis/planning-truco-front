@@ -26,6 +26,10 @@ export const Card = styled.div<{ showVote: boolean; alreadyVoted: boolean }>`
       : props.alreadyVoted
       ? `radial-gradient(circle, ${props.theme.colors.primary} 40%, ${props.theme.colors.success});`
       : props.theme.colors.separator};
+
+  @media (max-height: 700px) {
+    height: 6rem;
+  }
 `;
 
 export const UserVote = styled.span`

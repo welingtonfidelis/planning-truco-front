@@ -4,15 +4,29 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   margin: 0.5rem;
+  overflow-x: overlay;
+  max-width: calc(100vw - 1rem);
+  align-items: flex-end;
+  height: 11rem;
+
+  @media (max-height: 700px) {
+    height: 8rem;
+  }
 `;
 
-export const CardContent = styled.div<{ totalCards: number, isSelected: boolean }>`
+export const CardContent = styled.div<{
+  totalCards: number;
+  isSelected: boolean;
+}>`
   height: 9rem;
-  width: calc(100% / ${(props) => props.totalCards});
+  width: calc(100vw - 1rem / ${(props) => props.totalCards});
   margin: 0 0.2rem;
   border: 2px solid ${(props) => props.theme.colors.primary};
   transition: 0.5s;
-  background: ${(props) => props.isSelected ? `radial-gradient(circle, ${props.theme.colors.success} 40%, ${props.theme.colors.primary});` : '#fff'};
+  background: ${(props) =>
+    props.isSelected
+      ? `radial-gradient(circle, ${props.theme.colors.success} 40%, ${props.theme.colors.primary});`
+      : "#fff"};
   border-radius: 0.4rem;
   display: flex;
   align-items: center;
@@ -25,6 +39,14 @@ export const CardContent = styled.div<{ totalCards: number, isSelected: boolean 
     -webkit-transform: translateY(-16px);
     transform: translateY(-16px);
     filter: brightness(0.8);
+  }
+
+  @media (max-width: 800px) {
+    min-width: 4rem;
+  }
+
+  @media (max-height: 700px) {
+    height: 6rem;
   }
 `;
 
