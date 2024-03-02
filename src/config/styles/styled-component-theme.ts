@@ -2,10 +2,10 @@ export const light = {
   name: "light-theme",
   colors: {
     background: "#fdfdfd",
-    primary: "#1976D2",
-    primary_hover: "#1B7CDE",
-    secondary: "#0A2E52", 
-    tertiary: "#5B9AD9", 
+    primary: "#084963",
+    primary_hover: "#0A6174",
+    secondary: "#F2388F", 
+    tertiary: "#A63774", 
 
     separator:"#e2e8f0",
 

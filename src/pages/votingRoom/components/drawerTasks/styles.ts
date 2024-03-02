@@ -1,3 +1,4 @@
+import { FaTrash } from "react-icons/fa";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -5,13 +6,14 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const ListContent = styled.div`
+export const ListContent = styled.div<{ isSelected: boolean }>`
   display: flex;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 8px;
-  background: ${(props) => props.theme.colors.tertiary};
-  color: #fff;
+  border: 1px solid ${(props) => props.theme.colors.secondary};
+  background: ${(props) => props.isSelected && props.theme.colors.tertiary};
+  color: ${(props) => props.isSelected && "#fff"};
 `;
 
 export const LeftContent = styled.div`
@@ -26,10 +28,11 @@ export const LeftContent = styled.div`
   }
 `;
 
-export const RightContent = styled.div`
+export const RightContent = styled.div<{ isSelected: boolean }>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
 export const AddTaskButtonContent = styled.div`
@@ -61,5 +64,14 @@ export const CloseButtonContent = styled.div`
     position: absolute;
     right: -11px;
     top: -21px;
+  }
+`;
+
+export const DeleteIcon = styled(FaTrash)`
+  margin-top: 0.5rem;
+  transition: .5s;
+
+  &:hover {
+    fill: ${(props) => props.theme.colors.error};
   }
 `;

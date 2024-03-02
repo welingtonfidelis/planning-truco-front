@@ -18,7 +18,7 @@ import { Container, LogoContainer, TitleContainer } from "./styles";
 import { Props } from "./types";
 import { Profile } from "./components/profile";
 
-import logoImage from "../../assets/logo.png";
+import logoImage from "../../assets/logo-2.svg";
 import { roomStore } from "../../store/room";
 import { socketStore } from "../../store/socket";
 
@@ -63,8 +63,8 @@ export const PageHeader = (props: Props) => {
       </LogoContainer>
 
       <Menu>
-        <MenuButton>
-          <Avatar name={name} size={"sm"} />
+        <MenuButton padding={'0.5rem'}>
+          <Avatar name={name} size={"md"} bg='pink.500' />
         </MenuButton>
         <MenuList>
           <MenuItem onClick={onOpenProfile}>

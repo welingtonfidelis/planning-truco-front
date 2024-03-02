@@ -5,6 +5,7 @@ import {
   AddTaskButtonContent,
   CloseButtonContent,
   Container,
+  DeleteIcon,
   FormContainer,
   LeftContent,
   ListContent,
@@ -23,6 +24,8 @@ import { Field, Form, Formik } from "formik";
 import { formValidate } from "./helper/formValidate";
 import { SocketEvents } from "../../../../shared/enum/socketEvents";
 import { socketStore } from "../../../../store/socket";
+import { IconButton } from "../../../../components/iconButton";
+import { AlertConfirm } from "../../../../components/alertConfirm";
 
 const {
   CLIENT_ROOM_NEW_TASK,
@@ -74,36 +77,32 @@ export const DrawerTasks = (props: Props) => {
           const isCurrentTask = currentTaskId === task.id;
 
           return (
-            <ListContent key={task.id}>
+            <ListContent key={task.id} isSelected={isCurrentTask}>
               <LeftContent>
                 <span>{task.name}</span>
                 <strong>{task.points}</strong>
               </LeftContent>
 
-              <RightContent>
+              <RightContent isSelected={isCurrentTask}>
                 {isLoggedUserOwnerRoom && (
-                  <CloseButtonContent>
-                    <CloseButton
-                      size="sm"
-                      onClick={() => handleRemoveTask(task.id)}
-                    />
-                  </CloseButtonContent>
-                )}
+                  <>
+                  <div></div>
+                    {!isCurrentTask && (
+                      <Button
+                        disabled={isCurrentTask}
+                        colorScheme="blue"
+                        onClick={() => handleVoteNow(task.id)}
+                      >
+                        {t("components.drawer_tasks.vote_now")}
+                      </Button>
+                    )}
 
-                {isLoggedUserOwnerRoom ? (
-                  <Button
-                    disabled={isCurrentTask}
-                    colorScheme={isCurrentTask ? "gray" : "facebook"}
-                    onClick={() => handleVoteNow(task.id)}
-                  >
-                    {isCurrentTask
-                      ? t("components.drawer_tasks.voting")
-                      : t("components.drawer_tasks.vote_now")}
-                  </Button>
-                ) : (
-                  <span>
-                    {isCurrentTask && t("components.drawer_tasks.voting")}
-                  </span>
+                    <IconButton
+                      title="Delete"
+                      onClick={() => handleRemoveTask(task.id)}
+                      icon={<DeleteIcon />}
+                    />
+                  </>
                 )}
               </RightContent>
             </ListContent>

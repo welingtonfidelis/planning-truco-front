@@ -6,7 +6,7 @@ export const Container = styled.div`
 
     :hover {
       cursor: pointer;
-      filter: brightness(1.2);
+      filter: brightness(1.7);
     }
   }
 `;

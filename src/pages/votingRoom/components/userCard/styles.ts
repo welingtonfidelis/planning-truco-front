@@ -1,3 +1,4 @@
+import { FaCoffee, FaQuestion } from "react-icons/fa";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -22,9 +23,9 @@ export const Card = styled.div<{ showVote: boolean; alreadyVoted: boolean }>`
   align-items: center;
   background: ${(props) =>
     props.showVote
-      ? props.theme.colors.primary
+      ? `linear-gradient(45deg,#A63774 12%,transparent 0,transparent 88%,#A63774 0),linear-gradient(135deg,transparent 37%,#F2388F 0,#F2388F 63%,transparent 0),linear-gradient(45deg,transparent 37%,#A63774 0,#A63774 63%,transparent 0),#ed82bd;`
       : props.alreadyVoted
-      ? `radial-gradient(circle, ${props.theme.colors.primary} 40%, ${props.theme.colors.success});`
+      ? props.theme.colors.tertiary
       : props.theme.colors.separator};
 
   @media (max-height: 700px) {
@@ -33,7 +34,14 @@ export const Card = styled.div<{ showVote: boolean; alreadyVoted: boolean }>`
 `;
 
 export const UserVote = styled.span`
-  font-size: 2rem;
+  font-size: 3rem;
+  font-weight: 600;
+  text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+
+  & svg {
+    stroke-width: 10;
+    stroke: white;
+  }
 `;
 
 export const UserName = styled.span`
@@ -42,3 +50,7 @@ export const UserName = styled.span`
   max-width: 4.5rem;
   text-overflow: ellipsis;
 `;
+
+export const DoubtIcon = styled(FaQuestion)``;
+
+export const CoffeeIcon = styled(FaCoffee)``;

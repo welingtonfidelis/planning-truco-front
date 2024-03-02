@@ -32,20 +32,20 @@ export const LogoContainer = styled.div`
   align-items: center;
 
   img {
-    width: 8rem;
+    width: 7rem;
   }
 
   @media (min-width: 800px) {
     img {
-      width: 10rem;
+      width: 8rem;
     }
   }
 `;
 
 export const WellcomeMessageText = styled.span`
   text-align: center;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const FormContainer = styled.div`

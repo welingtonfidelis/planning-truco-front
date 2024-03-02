@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  padding: 0.5rem;
   margin-bottom: 0.5rem;
   background: ${(props) => props.theme.colors.primary};
 `;
@@ -12,7 +11,7 @@ export const LogoContainer = styled.div`
   flex: 1;
 
   img {
-    width: 4rem;
+    width: 5rem;
   }
 `;
 
@@ -31,5 +30,6 @@ export const TitleContainer = styled.div`
 
   & span:last-child {
     font-weight: 600;
+    font-size: 1.4rem;
   }
 `;
