@@ -92,9 +92,22 @@ export const roomStore = create<State & Action>((set) => ({
         users: updatedUsers,
       };
     }),
-  removeTask: (id) =>
+  removeTask: (taskId) =>
     set((state) => {
-      return { ...state, tasks: state.tasks.filter((user) => user.id !== id) };
+      let currentTaskId = state.currentTaskId;
+      let users = state.users;
+
+      if (state.currentTaskId === taskId) {
+        currentTaskId = '';
+        users = users.map((user) => ({ ...user, vote: null }));
+      }
+
+      return {
+        ...state,
+        currentTaskId,
+        users,
+        tasks: state.tasks.filter((task) => task.id !== taskId),
+      };
     }),
 
   userVoteTask: (userId, vote) =>
