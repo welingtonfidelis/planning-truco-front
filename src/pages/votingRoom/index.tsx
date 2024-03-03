@@ -12,7 +12,7 @@ import { UserCard } from "./components/userCard";
 import { Button, useToast } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import { Deck } from "./components/deck";
-import { Socket, io } from "socket.io-client";
+import { io } from "socket.io-client";
 import { config } from "../../config";
 import { KnownError } from "../../domains/knownError";
 import { ServerError } from "../../shared/const/serverError";
@@ -20,6 +20,8 @@ import { urlParams } from "../../services/util/urlParams";
 import { SocketEvents } from "../../shared/enum/socketEvents";
 import { socketStore } from "../../store/socket";
 import { Task } from "../../domains/task";
+import { storage } from "../../services/storage";
+import { ApplicationStorage } from "../../shared/enum/applicationStorage";
 
 const { ROOT } = ApplicationRoutes;
 const { INVALID_ROOM, MISSING_ROOM } = ServerError;
@@ -47,19 +49,21 @@ enum ChairPositionEnum {
   LEFT = "left",
 }
 
+const { USER } = ApplicationStorage;
+
 export const VotingRoom = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { getParams } = urlParams();
   const toast = useToast();
 
-  const { name: userName, updateUser } = userStore();
+  const { name: userName, id: loggedUserId, updateUser } = userStore();
   const {
     id: roomId,
     showVotes,
     ownerUserId,
     updateRoom,
-    users: usersOnStorage,
+    users: usersOnStore,
     addUser,
     removeUser,
     isLoggedUserOwnerRoom,
@@ -72,8 +76,9 @@ export const VotingRoom = () => {
     resetVotes,
   } = roomStore();
   const { socket, createSocketConnection } = socketStore();
+  const { get, set } = storage();
 
-  const chairOrganize = usersOnStorage.reduce(
+  const chairOrganize = usersOnStore.reduce(
     (acc, user) => {
       if (user.id === ownerUserId) acc[ChairPositionEnum.TOP].push(user);
       else acc[ChairPositionEnum.BOTTOM].push(user);
@@ -145,6 +150,20 @@ export const VotingRoom = () => {
         updateRoom({ ownerUserId: data, isLoggedUserOwnerRoom });
       });
 
+      socket.on(
+        SERVER_USER_UPDATE_PROFILE,
+        (data: { userId: string; profileData: Partial<User> }) => {
+          const { userId, profileData } = data;
+
+          updateUserProfile(userId, profileData);
+
+          if (userId === loggedUserId) {
+            const storedUser = get(USER) ?? {};
+            set(USER, { ...storedUser, ...profileData });
+          }
+        }
+      );
+
       // TASKS
       socket.on(SERVER_ROOM_NEW_TASK, (data: Task) => {
         addTask(data);
@@ -175,16 +194,6 @@ export const VotingRoom = () => {
           const { userId, vote } = data;
 
           userVoteTask(userId, vote);
-        }
-      );
-
-      // USERS
-      socket.on(
-        SERVER_USER_UPDATE_PROFILE,
-        (data: { userId: string; profileData: Partial<User> }) => {
-          const { userId, profileData } = data;
-
-          updateUserProfile(userId, profileData);
         }
       );
 
