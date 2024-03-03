@@ -7,11 +7,8 @@ export const Container = styled.div`
   overflow-x: overlay;
   max-width: calc(100vw - 1rem);
   align-items: flex-end;
-  height: 11rem;
-
-  @media (max-height: 700px) {
-    height: 8rem;
-  }
+  height: 10rem;
+  justify-content: center;
 
   ${css`
     .flipCardFront {
@@ -23,16 +20,8 @@ export const Container = styled.div`
 export const FlipCard = styled.div<{ totalCards: number }>`
   background-color: transparent;
   height: 9rem;
-  width: calc(100vw - 4rem / ${(props) => props.totalCards});
-  perspective: 1000px;
-
-  @media (max-width: 800px) {
-    min-width: 4rem;
-  }
-
-  @media (max-height: 700px) {
-    height: 6rem;
-  }
+  width: 6rem;
+  perspective: 100px;
 `;
 
 export const FlipCardInner = styled.div`
@@ -55,22 +44,27 @@ export const CardContentFront = styled.div<{
   justify-content: center;
   font-size: 3rem;
   font-weight: 600;
-
   border-radius: 0.2rem;
-
   position: absolute;
   width: calc(100% - 0.4rem);
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-
   border: 1px solid ${(props) => props.theme.colors.tertiary};
   transform: rotateY(180deg);
-  bottom: ${(props)=> props.isSelected && '16px'};
+  bottom: ${(props) => props.isSelected && "16px"};
 
   :hover {
     cursor: pointer;
     bottom: 16px;
+  }
+
+  @media (max-width: 850px) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: 650px) {
+    font-size: 1.5rem;
   }
 `;
 
