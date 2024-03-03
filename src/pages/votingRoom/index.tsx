@@ -4,6 +4,7 @@ import { userStore } from "../../store/user";
 import { roomStore } from "../../store/room";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import isEmpty from "lodash/isEmpty";
 import { PageHeader } from "../../components/pageHeader";
 import { FloatActionButtons } from "./components/floatActionButtons";
 import { User } from "../../domains/user";
@@ -11,7 +12,7 @@ import { Room, UserRoom } from "../../domains/room";
 import { UserCard } from "./components/userCard";
 import { Button, useToast } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { Deck } from "./components/deck";
+import { Deck } from "../../components/deck";
 import { io } from "socket.io-client";
 import { config } from "../../config";
 import { KnownError } from "../../domains/knownError";
@@ -22,6 +23,7 @@ import { socketStore } from "../../store/socket";
 import { Task } from "../../domains/task";
 import { storage } from "../../services/storage";
 import { ApplicationStorage } from "../../shared/enum/applicationStorage";
+import { DisableComponent } from "../../components/disableComponent";
 
 const { ROOT } = ApplicationRoutes;
 const { INVALID_ROOM, MISSING_ROOM } = ServerError;
@@ -62,6 +64,7 @@ export const VotingRoom = () => {
     id: roomId,
     showVotes,
     ownerUserId,
+    currentTaskId,
     updateRoom,
     users: usersOnStore,
     addUser,
@@ -237,18 +240,21 @@ export const VotingRoom = () => {
                 <Button
                   colorScheme="blue"
                   onClick={() => handleShowVotes(false)}
-                  disabled={!isLoggedUserOwnerRoom}
                 >
                   {t("pages.voting_room.button_reset_votes")}
                 </Button>
               ) : (
-                <Button
-                  colorScheme="blue"
-                  onClick={() => handleShowVotes(true)}
-                  disabled={!isLoggedUserOwnerRoom}
+                <DisableComponent
+                  isDisabled={isEmpty(currentTaskId)}
+                  message={t("pages.voting_room.disabled_show_votes_button_message")}
                 >
-                  {t("pages.voting_room.button_show_votes")}
-                </Button>
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => handleShowVotes(true)}
+                  >
+                    {t("pages.voting_room.button_show_votes")}
+                  </Button>
+                </DisableComponent>
               ))}
           </TableIcon>
 

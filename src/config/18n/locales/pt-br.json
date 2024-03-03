@@ -42,6 +42,7 @@
     },
     "voting_room": {
       "page_title": "Sala de votos",
+      "disabled_show_votes_button_message": "Por favor, escolha um tarefa antes.",
       "button_show_votes": "Virar cartas",
       "button_reset_votes": "Reiniciar jogo",
       "error_request_invalid_room_message": "Por favor, use o link de uma sala válida pra entrar ou crie uma."

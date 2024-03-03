@@ -21,8 +21,8 @@ export const TableContent = styled.div`
 `;
 
 export const TableIcon = styled.div`
-  width: 24rem;
-  height: 14rem;
+  width: 22rem;
+  height: 12rem;
   background-color: ${(props) => props.theme.colors.success};
   border-radius: 10px;
   border: 5px solid #8c3718;
@@ -31,7 +31,8 @@ export const TableIcon = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media (max-height: 700px) {
-    height: 10rem;
+  @media (max-height: 800px) {
+    width: 18rem;
+    height: 8rem;
   }
 `;
