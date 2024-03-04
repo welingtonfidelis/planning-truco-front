@@ -120,6 +120,7 @@ export const VotingRoom = () => {
 
     createSocketConnection(
       io(config.REST_API_URL, {
+        transports: ["websocket"],
         query: { userName, roomId },
       })
     );
