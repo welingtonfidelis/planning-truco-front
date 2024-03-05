@@ -3,6 +3,9 @@ import { IconButton } from "../../../../components/iconButton";
 import { Container, InviteUserIcon, TasksIcon } from "./styles";
 import { useTranslation } from "react-i18next";
 import { DrawerTasks } from "../drawerTasks";
+import { ApplicationRoutes } from "../../../../shared/enum/applicationRoutes";
+
+const { VOTING_ROOM } = ApplicationRoutes;
 
 export const FloatActionButtons = () => {
   const toast = useToast();
@@ -13,9 +16,9 @@ export const FloatActionButtons = () => {
     onClose: onDrawerTasksClose,
   } = useDisclosure();
 
-  const handleCopyToClipboard = () => {
-    const url = window.location.origin + window.location.search;
+  const url = window.location.href.replace(VOTING_ROOM, "");
 
+  const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(url).then(() => {
       toast({
         title: t("components.float_action_buttons.url_copied"),
@@ -31,7 +34,11 @@ export const FloatActionButtons = () => {
         title=""
       ></IconButton>
 
-      <IconButton icon={<TasksIcon />} onClick={onDrawerTasksOpen} title=""></IconButton>
+      <IconButton
+        icon={<TasksIcon />}
+        onClick={onDrawerTasksOpen}
+        title=""
+      ></IconButton>
 
       <DrawerTasks isOpen={isDrawerTasksOpen} onClose={onDrawerTasksClose} />
     </Container>

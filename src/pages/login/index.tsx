@@ -42,9 +42,9 @@ export const Login = () => {
   const { updateUser } = userStore();
   const { updateRoom } = roomStore();
   const toast = useToast();
-  const { getParams } = urlParams();
+  const { getParamFromHashUrl } = urlParams();
   const { get, set } = storage();
-  const roomId = getParams("roomId") as string;
+  const roomId = getParamFromHashUrl("roomId");
 
   const storedUser = get(USER);
 

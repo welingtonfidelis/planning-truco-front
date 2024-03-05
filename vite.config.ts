@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/planning-truco-front/",
   plugins: [react()],
+  base: "/planning-truco-front/",
 })

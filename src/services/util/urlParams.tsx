@@ -11,7 +11,7 @@ export const urlParams = () => {
   const getParams = (key?: string) => {
     const parsedParams = parse(location.search);
 
-    if (key) return parsedParams[key]
+    if (key) return parsedParams[key];
 
     return parsedParams;
   };
@@ -25,9 +25,19 @@ export const urlParams = () => {
     setSearchParams(stringify(oldParams));
   };
 
+  const getParamFromHashUrl = (key: string) => {
+    const hashedParams = location.hash; 
+
+    const regex = new RegExp(key + '=([^&?]*)');
+
+    const result = hashedParams.match(regex);
+
+    return result?.[1];
+  };
+
   const setMultipleParams = (params: SetMultipleParams) => {
     setSearchParams(stringify(params));
   };
 
-  return { getParams, setParams, setMultipleParams };
+  return { getParams, getParamFromHashUrl, setParams, setMultipleParams };
 };

@@ -1,10 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import { LayoutRenderer } from "./components/layouts";
 import { routes } from "./routes";
 
 export const AppRouter = () => {
   return (
-    <BrowserRouter>
+    // <BrowserRouter> Using hashRouter for fix gh pages routing
+    <HashRouter>
       <LayoutRenderer>
         <Routes>
           {routes.map(({ path, element: Component }) => (
@@ -12,6 +13,7 @@ export const AppRouter = () => {
           ))}
         </Routes>
       </LayoutRenderer>
-    </BrowserRouter>
+    </HashRouter>
+    // </BrowserRouter>
   );
 };
