@@ -56,7 +56,7 @@ const { USER } = ApplicationStorage;
 export const VotingRoom = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { getParamFromHashUrl } = urlParams();
+  const { getParams } = urlParams();
   const toast = useToast();
 
   const { name: userName, id: loggedUserId, updateUser } = userStore();
@@ -102,7 +102,7 @@ export const VotingRoom = () => {
 
   useEffect(() => {
     if (!roomId) {
-      const roomIdUrl = getParamFromHashUrl("roomId");
+      const roomIdUrl = getParams("roomId") as string;
 
       if (roomIdUrl) {
         navigate({
