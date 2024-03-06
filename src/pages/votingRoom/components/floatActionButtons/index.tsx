@@ -4,6 +4,7 @@ import { Container, InviteUserIcon, TasksIcon } from "./styles";
 import { useTranslation } from "react-i18next";
 import { DrawerTasks } from "../drawerTasks";
 import { ApplicationRoutes } from "../../../../shared/enum/applicationRoutes";
+import { copyToClipboard } from "../../../../services/util/copyToClipboard";
 
 const { VOTING_ROOM } = ApplicationRoutes;
 
@@ -17,13 +18,14 @@ export const FloatActionButtons = () => {
   } = useDisclosure();
 
   const url = window.location.href.replace(VOTING_ROOM, "");
-
-  const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(url).then(() => {
-      toast({
-        title: t("components.float_action_buttons.url_copied"),
-      });
+  const onCopySuccess = () => {
+    toast({
+      title: t("components.float_action_buttons.url_copied"),
     });
+  };
+  
+  const handleCopyToClipboard = () => {
+    copyToClipboard({ textToCopy: url, onSuccess: onCopySuccess });
   };
 
   return (
