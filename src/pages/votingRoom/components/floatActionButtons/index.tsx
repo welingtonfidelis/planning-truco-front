@@ -1,6 +1,11 @@
 import { useDisclosure, useToast } from "@chakra-ui/react";
 import { IconButton } from "../../../../components/iconButton";
-import { Container, InviteUserIcon, TasksIcon } from "./styles";
+import {
+  ButtonContainer,
+  Container,
+  InviteUserIcon,
+  TasksIcon,
+} from "./styles";
 import { useTranslation } from "react-i18next";
 import { DrawerTasks } from "../drawerTasks";
 import { ApplicationRoutes } from "../../../../shared/enum/applicationRoutes";
@@ -23,24 +28,28 @@ export const FloatActionButtons = () => {
       title: t("components.float_action_buttons.url_copied"),
     });
   };
-  
+
   const handleCopyToClipboard = () => {
     copyToClipboard({ textToCopy: url, onSuccess: onCopySuccess });
   };
 
   return (
     <Container>
-      <IconButton
-        icon={<InviteUserIcon />}
-        onClick={handleCopyToClipboard}
-        title=""
-      ></IconButton>
+      <ButtonContainer topSpace={0}>
+        <IconButton
+          icon={<InviteUserIcon />}
+          onClick={handleCopyToClipboard}
+          title={t("pages.voting_room.copy_room_link_tooltip")}
+        ></IconButton>
+      </ButtonContainer>
 
-      <IconButton
-        icon={<TasksIcon />}
-        onClick={onDrawerTasksOpen}
-        title=""
-      ></IconButton>
+      <ButtonContainer topSpace={3}>
+        <IconButton
+          icon={<TasksIcon />}
+          onClick={onDrawerTasksOpen}
+          title={t("pages.voting_room.edit_tasks_tooltip")}
+        ></IconButton>
+      </ButtonContainer>
 
       <DrawerTasks isOpen={isDrawerTasksOpen} onClose={onDrawerTasksClose} />
     </Container>
