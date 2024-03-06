@@ -161,9 +161,10 @@ export const VotingRoom = () => {
 
           updateUserProfile(userId, profileData);
 
-          if (userId === loggedUserId) {
+          if (userId === data.userId) {
             const storedUser = get(USER) ?? {};
-            set(USER, { ...storedUser, ...profileData });
+            set(USER, { ...storedUser, ...data.profileData });
+            updateUser(data.profileData);
           }
         }
       );
@@ -247,7 +248,9 @@ export const VotingRoom = () => {
               ) : (
                 <DisableComponent
                   isDisabled={isEmpty(currentTaskId)}
-                  message={t("pages.voting_room.disabled_show_votes_button_message")}
+                  message={t(
+                    "pages.voting_room.disabled_show_votes_button_message"
+                  )}
                 >
                   <Button
                     colorScheme="blue"
