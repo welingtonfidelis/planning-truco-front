@@ -21,6 +21,7 @@ import { Profile } from "./components/profile";
 import logoImage from "../../assets/logo-2.svg";
 import { roomStore } from "../../store/room";
 import { socketStore } from "../../store/socket";
+import { About } from "./components/about";
 
 const { ROOT } = ApplicationRoutes;
 
@@ -36,6 +37,11 @@ export const PageHeader = (props: Props) => {
     isOpen: isOpenProfile,
     onOpen: onOpenProfile,
     onClose: onCloseProfile,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenAbout,
+    onOpen: onOpenAbout,
+    onClose: onCloseAbout,
   } = useDisclosure();
   const { name, clearUser } = userStore();
   const { currentTaskId, tasks } = roomStore();
@@ -71,6 +77,10 @@ export const PageHeader = (props: Props) => {
             {t("components.page_header.menu_item_profile")}
           </MenuItem>
           <Divider />
+          <MenuItem onClick={onOpenAbout}>
+            {t("components.page_header.menu_item_about")}
+          </MenuItem>
+          <Divider />
           <MenuItem onClick={onOpenLogout} color="red">
             {t("components.page_header.menu_item_logout")}
           </MenuItem>
@@ -86,6 +96,8 @@ export const PageHeader = (props: Props) => {
       />
 
       <Profile isOpen={isOpenProfile} onClose={onCloseProfile} />
+
+      <About isOpen={isOpenAbout} onClose={onCloseAbout} />
     </Container>
   );
 };

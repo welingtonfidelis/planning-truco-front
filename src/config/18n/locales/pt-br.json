@@ -5,6 +5,7 @@
     },
     "page_header": {
       "menu_item_profile": "Perfil",
+      "menu_item_about": "Sobre",
       "menu_item_logout": "Sair",
       "alert_title_logout": "Sair da sala",
       "alert_description_logout": "Quer realmente sair da sala de votação?",
@@ -13,6 +14,13 @@
     "profile": {
       "title": "Perfil",
       "input_name": "Seu nome"
+    },
+    "about": {
+      "title": "Sobre",
+      "welcome_message": "Bem-Vindo ao Planning Truco!",
+      "description_message": "Obrigado por usar este projeto pra discutir e planejar tarefas com sua equipe! Esperamos que esteja aproveitando a experiência.<br/><br/> Estamos abertos a feedback! Se tiver ideias de melhorias ou encontrar algum problema, ficaremos felizes em saber. Sua opinião é fundamental para tornar o Planning Truco ainda melhor.<br/><br/> Apreciamos sua participação e tenha um ótimo truco!<br/>",
+      "copy_email_tooltip": "Copiar e-mail",
+      "email_copied": "Endereço de e-mail copiado."
     },
     "float_action_buttons": {
       "url_copied": "Link copiado, pode enviar para outro usuário."
