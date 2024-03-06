@@ -35,6 +35,7 @@ export const Card = (props: Props) => {
   const { socket } = socketStore();
 
   const extraCards: { [key: number]: any } = {
+    [0.5]: "1/2",
     [-1]: <DoubtIcon />,
     [1000]: <CoffeeIcon />,
   };

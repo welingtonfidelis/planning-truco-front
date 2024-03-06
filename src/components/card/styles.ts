@@ -38,7 +38,7 @@ export const CardContentFront = styled.div<{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 600;
   border-radius: 0.2rem;
   position: absolute;
@@ -55,12 +55,8 @@ export const CardContentFront = styled.div<{
     bottom: ${(props) => props.useHover && "16px"};
   }
 
-  @media (max-width: 850px) {
-    font-size: 2.5rem;
-  }
-
-  @media (max-width: 750px) {
-    font-size: 3rem;
+  @media (max-width: 950px) {
+    font-size: 2rem;
   }
 `;
 
