@@ -5,6 +5,6 @@ export interface Props {
     isOpen: boolean;
     onConfirmLoading?: boolean;
     showActionButtons?: boolean;
-    onConfirm: () => void;
+    onConfirm?: () => void;
     onClose: () => void;
 }

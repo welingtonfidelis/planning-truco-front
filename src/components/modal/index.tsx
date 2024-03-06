@@ -36,16 +36,19 @@ export const Modal = (props: PropsWithChildren<Props>) => {
         <ModalBody>{children}</ModalBody>
         {showActionButtons && (
           <ModalFooter>
-            <Button onClick={onClose} colorScheme="gray" marginEnd={"2"}>
+            <Button onClick={onClose} colorScheme="gray">
               {onCloseButtonText || t("generic.button_cancel")}
             </Button>
-            <Button
-              onClick={onConfirm}
-              colorScheme="blue"
-              isLoading={onConfirmLoading}
-            >
-              {onConfirmButtonText || t("generic.button_save")}
-            </Button>
+            {onConfirm && (
+              <Button
+                onClick={onConfirm}
+                colorScheme="blue"
+                marginStart={"2"}
+                isLoading={onConfirmLoading}
+              >
+                {onConfirmButtonText || t("generic.button_save")}
+              </Button>
+            )}
           </ModalFooter>
         )}
       </ModalContent>
