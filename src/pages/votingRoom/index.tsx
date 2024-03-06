@@ -102,16 +102,16 @@ export const VotingRoom = () => {
 
   useEffect(() => {
     if (!roomId) {
-      const roomIdUrl = getParams("roomId") as string;
+      // const roomIdUrl = getParams("roomId") as string;
 
-      if (roomIdUrl) {
-        navigate({
-          pathname: ROOT,
-          search: createSearchParams({ roomId: roomIdUrl }).toString(),
-        });
+      // if (roomIdUrl) {
+      //   navigate({
+      //     pathname: ROOT,
+      //     search: createSearchParams({ roomId: roomIdUrl }).toString(),
+      //   });
 
-        return;
-      }
+      //   return;
+      // }
 
       navigate(ROOT);
 
