@@ -53,6 +53,8 @@
       "disabled_show_votes_button_message": "Por favor, escolha um tarefa antes.",
       "button_show_votes": "Virar cartas",
       "button_reset_votes": "Reiniciar jogo",
+      "copy_room_link_tooltip": "Copiar endereço da sala",
+      "edit_tasks_tooltip": "Editar tarefas",
       "error_request_invalid_room_message": "Por favor, use o link de uma sala válida pra entrar ou crie uma."
     }
   },
