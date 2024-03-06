@@ -1,18 +1,19 @@
+import { IconButton as IconButtonChakra } from "@chakra-ui/react";
 import { Container } from "./styles";
-
-interface Props {
-    icon: React.ReactElement;
-    onClick: () => void;
-    title: string;
-}
+import { Props } from "./types";
 
 export const IconButton = (props: Props) => {
-    const { icon, title, onClick } = props;
+  const { icon, title, onClick } = props;
 
-    return (
-        <Container onClick={onClick} title={title}>
-            {icon}
-        </Container>
-    )
-
-}
+  return (
+    <Container>
+      <IconButtonChakra
+        icon={icon}
+        onClick={onClick}
+        aria-label={title}
+        title={title}
+        variant="ghost"
+      />
+    </Container>
+  );
+};
