@@ -1,4 +1,4 @@
-import { FaTasks, FaUserPlus } from "react-icons/fa";
+import { FaRegShareSquare, FaTasks } from "react-icons/fa";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -11,7 +11,7 @@ export const ButtonContainer = styled.div<{ topSpace: number }>`
   top: ${(props) => props.topSpace}rem;
 `;
 
-export const InviteUserIcon = styled(FaUserPlus)`
+export const InviteUserIcon = styled(FaRegShareSquare)`
   font-size: 2.2rem;
   fill: ${(props) => props.theme.colors.primary};
 `;

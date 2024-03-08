@@ -1,4 +1,4 @@
-import { FaCoffee, FaQuestion } from "react-icons/fa";
+import { FaCoffee, FaHatCowboy, FaQuestion } from "react-icons/fa";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -19,4 +19,13 @@ export const UserName = styled.span`
   white-space: nowrap;
   max-width: 4.5rem;
   text-overflow: ellipsis;
+`;
+
+export const HatIcon = styled(FaHatCowboy)`
+  font-size: 2.2rem;
+  fill: ${(props) => props.theme.colors.primary};
+
+  :hover {
+    cursor: pointer;
+  }
 `;

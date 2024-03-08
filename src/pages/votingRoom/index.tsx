@@ -234,6 +234,7 @@ export const VotingRoom = () => {
           <UserCard
             showVotes={showVotes}
             users={chairOrganize[ChairPositionEnum.TOP]}
+            userIdOwnerRoom={ownerUserId}
           />
 
           <TableIcon>
@@ -265,6 +266,7 @@ export const VotingRoom = () => {
           <UserCard
             showVotes={showVotes}
             users={chairOrganize[ChairPositionEnum.BOTTOM]}
+            userIdOwnerRoom={ownerUserId}
           />
         </TableContent>
 

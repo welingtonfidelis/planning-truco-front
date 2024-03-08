@@ -32,6 +32,9 @@
       "input_task_name": "Título da tarefa",
       "button_new_task": "Nova tarefa"
     },
+    "user_card": {
+      "adm_room_tooltip": "Administrador da sala"
+    },
     "room_configuration": {
       "title": "Configurações da sala",
       "personalized_scale": "Escala personalizada",
