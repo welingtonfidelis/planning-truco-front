@@ -45,7 +45,7 @@
       "personalized_scale_invalid": "Escada deve ter ao menos um (1) item"
     },
     "deck": {
-      "waiting_adm_create_task": "Aguardando administrador criar ou selecionar tarefa para votarem"
+      "waiting_adm_create_task": "Aguardando administrador criar ou selecionar uma tarefa para votação"
     }
   },
   "pages": {
