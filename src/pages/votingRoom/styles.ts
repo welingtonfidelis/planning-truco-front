@@ -19,20 +19,3 @@ export const TableContent = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
-export const TableIcon = styled.div`
-  width: 22rem;
-  height: 12rem;
-  background-color: ${(props) => props.theme.colors.success};
-  border-radius: 10px;
-  border: 5px solid #8c3718;
-  margin: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-height: 800px) {
-    width: 18rem;
-    height: 8rem;
-  }
-`;

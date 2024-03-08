@@ -1,16 +1,15 @@
 import { ApplicationRoutes } from "../../shared/enum/applicationRoutes";
-import { Container, Content, TableContent, TableIcon } from "./styles";
+import { Container, Content, TableContent } from "./styles";
 import { userStore } from "../../store/user";
 import { roomStore } from "../../store/room";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import isEmpty from "lodash/isEmpty";
 import { PageHeader } from "../../components/pageHeader";
 import { FloatActionButtons } from "./components/floatActionButtons";
 import { User } from "../../domains/user";
-import { Room, UserRoom } from "../../domains/room";
+import { Room } from "../../domains/room";
 import { UserCard } from "./components/userCard";
-import { Button, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import { Deck } from "../../components/deck";
 import { io } from "socket.io-client";
@@ -23,7 +22,6 @@ import { socketStore } from "../../store/socket";
 import { Task } from "../../domains/task";
 import { storage } from "../../services/storage";
 import { ApplicationStorage } from "../../shared/enum/applicationStorage";
-import { DisableComponent } from "../../components/disableComponent";
 
 const { ROOT } = ApplicationRoutes;
 const { INVALID_ROOM, MISSING_ROOM } = ServerError;
@@ -40,16 +38,7 @@ const {
   SERVER_ROOM_SHOW_VOTES,
   SERVER_ROOM_RESET_VOTES,
   SERVER_USER_UPDATE_PROFILE,
-  CLIENT_ROOM_SHOW_VOTES,
-  CLIENT_ROOM_RESET_VOTES,
 } = SocketEvents;
-
-enum ChairPositionEnum {
-  TOP = "top",
-  RIGHT = "right",
-  BOTTOM = "bottom",
-  LEFT = "left",
-}
 
 const { USER } = ApplicationStorage;
 
@@ -59,17 +48,12 @@ export const VotingRoom = () => {
   const { getParams } = urlParams();
   const toast = useToast();
 
-  const { name: userName, id: loggedUserId, updateUser } = userStore();
+  const { name: userName, updateUser } = userStore();
   const {
     id: roomId,
-    showVotes,
-    ownerUserId,
-    currentTaskId,
     updateRoom,
-    users: usersOnStore,
     addUser,
     removeUser,
-    isLoggedUserOwnerRoom,
     addTask,
     removeTask,
     userVoteTask,
@@ -80,25 +64,6 @@ export const VotingRoom = () => {
   } = roomStore();
   const { socket, createSocketConnection } = socketStore();
   const { get, set } = storage();
-
-  const chairOrganize = usersOnStore.reduce(
-    (acc, user) => {
-      if (user.id === ownerUserId) acc[ChairPositionEnum.TOP].push(user);
-      else acc[ChairPositionEnum.BOTTOM].push(user);
-
-      return acc;
-    },
-    {
-      [ChairPositionEnum.TOP]: [] as UserRoom[],
-      [ChairPositionEnum.BOTTOM]: [] as UserRoom[],
-    }
-  );
-
-  const handleShowVotes = (showVotes: boolean) => {
-    if (showVotes) return socket?.emit(CLIENT_ROOM_SHOW_VOTES);
-
-    socket?.emit(CLIENT_ROOM_RESET_VOTES);
-  };
 
   useEffect(() => {
     if (!roomId) {
@@ -231,43 +196,7 @@ export const VotingRoom = () => {
         <div></div>
 
         <TableContent>
-          <UserCard
-            showVotes={showVotes}
-            users={chairOrganize[ChairPositionEnum.TOP]}
-            userIdOwnerRoom={ownerUserId}
-          />
-
-          <TableIcon>
-            {isLoggedUserOwnerRoom &&
-              (showVotes ? (
-                <Button
-                  colorScheme="blue"
-                  onClick={() => handleShowVotes(false)}
-                >
-                  {t("pages.voting_room.button_reset_votes")}
-                </Button>
-              ) : (
-                <DisableComponent
-                  isDisabled={isEmpty(currentTaskId)}
-                  message={t(
-                    "pages.voting_room.disabled_show_votes_button_message"
-                  )}
-                >
-                  <Button
-                    colorScheme="blue"
-                    onClick={() => handleShowVotes(true)}
-                  >
-                    {t("pages.voting_room.button_show_votes")}
-                  </Button>
-                </DisableComponent>
-              ))}
-          </TableIcon>
-
-          <UserCard
-            showVotes={showVotes}
-            users={chairOrganize[ChairPositionEnum.BOTTOM]}
-            userIdOwnerRoom={ownerUserId}
-          />
+          <UserCard />
         </TableContent>
 
         <Deck />

@@ -45,6 +45,7 @@ export const CardContentFront = styled.div<{
   position: absolute;
   width: 100%;
   height: 100%;
+  background-color: #fff;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   border: 1px solid ${(props) => props.theme.colors.secondary};
@@ -80,6 +81,7 @@ export const CardContentBack = styled.div<{
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   border-radius: 0.2rem;
+  background-color: #fff;
   background-image: ${(props) =>
     props.useBackground ? `url(${backgroundCard})` : ""};
   background-repeat: no-repeat;
