@@ -7,8 +7,7 @@ export const Container = styled.div`
   max-width: calc(100vw - 1rem);
   align-items: flex-end;
   height: 10rem;
-  /* justify-content: center; */
-  justify-content: flex-start;
+  justify-content: space-between;
 
   @media (max-width: 750px) {
     height: 11rem;

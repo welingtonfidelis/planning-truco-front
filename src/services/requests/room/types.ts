@@ -1,7 +1,7 @@
-import { User } from "../../../domains/user";
-
 // Request
-export interface CreateRoomPayload {}
+export interface CreateRoomPayload {
+  scale: string[];
+}
 
 // Response
 export interface CreateRoomResponse {

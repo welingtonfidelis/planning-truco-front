@@ -31,6 +31,15 @@
       "voting": "Votando",
       "input_task_name": "Título da tarefa",
       "button_new_task": "Nova tarefa"
+    },
+    "room_configuration": {
+      "title": "Configurações da sala",
+      "personalized_scale": "Escala personalizada",
+      "scale_fibonacci": "Fibonacci",
+      "scale_fibonacci_variant": "Variante de Fibonacci",
+      "scale_sequential": "Sequencial",
+      "scale_personalized": "Personalizado",
+      "personalized_scale_invalid": "Escada deve ter ao menos um (1) item"
     }
   },
   "pages": {
@@ -46,14 +55,15 @@
       "input_user_name": "Seu nome",
       "input_user_name_invalid": "Nome inválido",
       "button_login": "Entrar na sala",
-      "button_create_room": "Criar uma sala"
+      "button_create_room": "Criar uma sala",
+      "room_config_tooltip": "Configurações da sala"
     },
     "voting_room": {
       "page_title": "Sala de votos",
       "disabled_show_votes_button_message": "Por favor, escolha um tarefa antes.",
       "button_show_votes": "Virar cartas",
       "button_reset_votes": "Reiniciar jogo",
-      "copy_room_link_tooltip": "Copiar endereço da sala",
+      "copy_room_link_tooltip": "Copiar link da sala",
       "edit_tasks_tooltip": "Editar tarefas",
       "error_request_invalid_room_message": "Por favor, use o link de uma sala válida pra entrar ou crie uma."
     }

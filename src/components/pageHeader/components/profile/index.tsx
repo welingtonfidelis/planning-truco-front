@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Formik, Form, Field, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers, FormikProps } from "formik";
 import {
   FormControl,
   FormErrorMessage,
@@ -25,9 +25,9 @@ export const Profile = (props: Props) => {
   const { name, id } = userStore();
   const { socket } = socketStore();
   const validateFormFields = formValidate();
-  const formRef = useRef<any>();
+  const formRef = useRef<FormikProps<FormProps>>(null);
 
-  const initialFormValues = {
+  const initialFormValues: FormProps = {
     name,
   };
 

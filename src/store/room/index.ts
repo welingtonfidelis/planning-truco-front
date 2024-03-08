@@ -9,6 +9,7 @@ const initialUserState: State = {
   users: [],
   currentTaskId: "",
   tasks: [],
+  scale: []
 };
 
 export const roomStore = create<State & Action>((set) => ({

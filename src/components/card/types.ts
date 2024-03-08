@@ -1,5 +1,5 @@
 export interface Props {
-    cardValue?: number | null;
+    cardValue?: string | null;
     flipCard: boolean;
     isSelectedCard: boolean;
     useHoverCard?: boolean;

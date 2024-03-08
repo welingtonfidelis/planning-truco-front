@@ -38,8 +38,7 @@ export const CardContentFront = styled.div<{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  font-weight: 600;
+
   border-radius: 0.2rem;
   position: absolute;
   width: 100%;
@@ -49,6 +48,13 @@ export const CardContentFront = styled.div<{
   border: 1px solid ${(props) => props.theme.colors.tertiary};
   transform: rotateY(180deg);
   bottom: ${(props) => props.isSelected && "16px"};
+  overflow: hidden;
+
+  span {
+    font-size: 2.5rem;
+    font-weight: 600;
+    word-break: break-all;
+  }
 
   :hover {
     cursor: pointer;
@@ -56,7 +62,9 @@ export const CardContentFront = styled.div<{
   }
 
   @media (max-width: 950px) {
-    font-size: 2rem;
+    span {
+      font-size: 2rem;
+    }
   }
 `;
 

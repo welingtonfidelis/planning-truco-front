@@ -10,6 +10,7 @@ declare module "styled-components" {
       primary_hover: string;
       secondary: string;
       tertiary: string;
+      disabled_primary: string;
       separator: string;
       error: string;
       success: string;

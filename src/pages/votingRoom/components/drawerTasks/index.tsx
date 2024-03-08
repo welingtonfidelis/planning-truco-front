@@ -80,7 +80,7 @@ export const DrawerTasks = (props: Props) => {
             <ListContent key={task.id} isSelected={isCurrentTask}>
               <LeftContent>
                 <span>{task.name}</span>
-                <strong>{task.points}</strong>
+                <strong>{task.points ?? "?"}</strong>
               </LeftContent>
 
               <RightContent isSelected={isCurrentTask}>

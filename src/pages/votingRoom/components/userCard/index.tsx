@@ -3,6 +3,7 @@ import { Container, Content, UserName } from "./styles";
 import { Props } from "./types";
 import { Card } from "../../../../components/card";
 import { SizeCard } from "../../../../components/card/types";
+import { Tooltip } from "@chakra-ui/react";
 
 export const UserCard = (props: Props) => {
   const { users, showVotes } = props;
@@ -19,7 +20,9 @@ export const UserCard = (props: Props) => {
               useHoverCard={false}
               sizeCard={SizeCard.SMALL}
             />
-            <UserName>{user.name}</UserName>
+            <Tooltip label={user.name} hasArrow>
+              <UserName>{user.name}</UserName>
+            </Tooltip>
           </Content>
         );
       })}
