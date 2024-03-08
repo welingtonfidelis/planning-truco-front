@@ -2,6 +2,7 @@ export interface Props {
     cardValue?: string | null;
     flipCard: boolean;
     isSelectedCard: boolean;
+    isCardOnDeck: boolean;
     useHoverCard?: boolean;
     sizeCard?: SizeCard;
 }

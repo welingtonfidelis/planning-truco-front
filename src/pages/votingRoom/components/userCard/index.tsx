@@ -31,6 +31,7 @@ export const UserCard = (props: Props) => {
               isSelectedCard={!isNil(user.vote)}
               useHoverCard={false}
               sizeCard={SizeCard.SMALL}
+              isCardOnDeck={false}
             />
             <Tooltip label={user.name} hasArrow>
               <UserName>{user.name}</UserName>

@@ -32,6 +32,7 @@ export const Card = (props: Props) => {
     isSelectedCard,
     useHoverCard = true,
     sizeCard = SizeCard.LARGE,
+    isCardOnDeck,
   } = props;
   const { socket } = socketStore();
 
@@ -71,7 +72,10 @@ export const Card = (props: Props) => {
             <span id={cardId}>{cardLabel}</span>
           </CardContentFront>
         </Tooltip>
-        <CardContentBack isSelected={!flipCard && isSelectedCard} />
+        <CardContentBack
+          useBackground={isCardOnDeck || isSelectedCard}
+          isSelected={isSelectedCard}
+        />
       </FlipCardInner>
     </FlipCard>
   );
