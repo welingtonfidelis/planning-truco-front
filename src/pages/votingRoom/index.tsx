@@ -160,7 +160,7 @@ export const VotingRoom = () => {
 
       socket.on(
         SERVER_ROOM_VOTE_TASK,
-        (data: { userId: string; vote: number }) => {
+        (data: { userId: string; vote: string }) => {
           const { userId, vote } = data;
 
           userVoteTask(userId, vote);
