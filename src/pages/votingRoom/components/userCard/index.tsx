@@ -23,8 +23,10 @@ export const UserCard = () => {
   const { socket } = socketStore();
   const { t } = useTranslation();
 
+  const isTotalUsersOdd = users.length % 2 === 0;
+  const totalCards = users.length + (isTotalUsersOdd ? 0 : 1);
+
   function getCardComponentPosition(index: number) {
-    const totalCards = users.length;
 
     const angle = (index / totalCards) * 360;
     const radius = 100; // radius circumference where cards will be positioned
