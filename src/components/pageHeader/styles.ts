@@ -1,6 +1,7 @@
+import { Flex } from "@chakra-ui/react";
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled(Flex)`
   display: flex;
   margin-bottom: 0.5rem;
   background: ${(props) => props.theme.colors.primary};

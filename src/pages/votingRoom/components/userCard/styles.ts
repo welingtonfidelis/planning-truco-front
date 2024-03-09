@@ -52,7 +52,7 @@ export const Content = styled.div<{ top: number; left: number }>`
 export const UserName = styled.span`
   overflow: hidden;
   white-space: nowrap;
-  max-width: 4.5rem;
+  max-width: 6rem;
   text-overflow: ellipsis;
 `;
 
