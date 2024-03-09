@@ -23,7 +23,8 @@
       "email_copied": "Endereço de e-mail copiado."
     },
     "float_action_buttons": {
-      "url_copied": "Link copiado, pode enviar para outro usuário."
+      "url_copied": "Link copiado, pode enviar para outro usuário.",
+      "needs_create_select_room": "Crie uma tarefa e selecione-a pra iniciar a votação"
     },
     "drawer_tasks": {
       "title": "Tarefas",
