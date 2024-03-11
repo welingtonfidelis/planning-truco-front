@@ -48,6 +48,7 @@ export const FloatActionButtons = () => {
           icon={<InviteUserIcon />}
           onClick={handleCopyToClipboard}
           title={t("pages.voting_room.copy_room_link_tooltip")}
+          titlePlacement="left"
         ></IconButton>
       </ButtonContainer>
 
@@ -64,6 +65,7 @@ export const FloatActionButtons = () => {
               icon={<TasksIcon />}
               onClick={onDrawerTasksOpen}
               title={t("pages.voting_room.edit_tasks_tooltip")}
+              titlePlacement="left"
             ></IconButton>
           </div>
         </ToolTipStyled>
