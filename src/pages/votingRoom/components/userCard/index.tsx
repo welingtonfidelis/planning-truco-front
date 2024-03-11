@@ -126,10 +126,11 @@ export const UserCard = () => {
 
       {users.map((user, index) => {
         const { left, top } = getCardComponentPosition(index);
+        const isUserOnMapOwnerRoom = user.id === ownerUserId;
 
         return (
           <Content key={user.id} top={top} left={left}>
-            {user.id === ownerUserId && (
+            {isUserOnMapOwnerRoom && (
               <Tooltip
                 label={t("components.user_card.adm_room_tooltip")}
                 hasArrow
@@ -152,7 +153,7 @@ export const UserCard = () => {
                 <span>{user.name}</span>
               </Tooltip>
 
-              {isLoggedUserOwnerRoom && user.id !== ownerUserId && (
+              {isLoggedUserOwnerRoom && !isUserOnMapOwnerRoom && (
                 <Menu placement="auto">
                   <Tooltip
                     label={t("components.user_card.user_actions_tooltip")}
