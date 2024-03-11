@@ -57,7 +57,7 @@ export const PageHeader = (props: Props) => {
   const currentTask = tasks.find((task) => task.id === currentTaskId);
 
   return (
-    <Container>
+    <Container zIndex="dropdown">
       <LogoContainer>
         <img src={logoImage} alt="logo image" />
 

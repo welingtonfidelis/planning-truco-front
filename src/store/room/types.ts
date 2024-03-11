@@ -13,6 +13,6 @@ export type Action = {
   addTask: (data: Task) => void;
   updateCurrentTask: (taskId: string) => void; 
   removeTask: (taskId: string) => void;
-  userVoteTask: (userId: string, vote: number) => void;
+  userVoteTask: (userId: string, vote: string) => void;
   updateUserProfile: (userId: string, data: Partial<User>) => void;
 };

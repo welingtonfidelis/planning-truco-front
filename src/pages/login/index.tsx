@@ -6,8 +6,10 @@ import {
   ActionContainer,
   Container,
   Content,
+  CreateRoomActionContainer,
   FormContainer,
   LogoContainer,
+  PreferenceIcon,
   WellcomeMessageText,
 } from "./styles";
 
@@ -18,6 +20,7 @@ import {
   FormControl,
   FormErrorMessage,
   Input,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { formValidate } from "./helper/formValidate";
@@ -29,10 +32,16 @@ import { urlParams } from "../../services/util/urlParams";
 import { useCreateRoom } from "../../services/requests/room";
 import { storage } from "../../services/storage";
 import { ApplicationStorage } from "../../shared/enum/applicationStorage";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { RoomPreferences } from "./components/roomPreferences";
+import { IconButton } from "../../components/iconButton";
+import { SCALE_POINT_NAME } from "../../shared/enum/scalePointName";
+import { ScaleType } from "./components/roomPreferences/types";
+import { SCALE_POINT_VALUE } from "../../shared/const/scalePointValue";
 
 const { VOTING_ROOM } = ApplicationRoutes;
-const { USER } = ApplicationStorage;
+const { USER, SCALE_POINT } = ApplicationStorage;
+const { FIBONACCI, PERSONALIZED } = SCALE_POINT_NAME;
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -47,8 +56,20 @@ export const Login = () => {
   const roomId = getParams("roomId") as string;
 
   const storedUser = get(USER);
+  const storedScaleType = get(SCALE_POINT);
 
-  const initialFormValues = useMemo(() => {
+  const [scaleType, setScaleType] = useState<ScaleType>({
+    scale: storedScaleType.scale ?? FIBONACCI,
+    personalized: storedScaleType.personalized ?? [],
+  });
+
+  const {
+    isOpen: isOpenRoomPreferences,
+    onOpen: onOpenRoomPreferences,
+    onClose: onCloseRoomPreferences,
+  } = useDisclosure();
+
+  const initialFormValues: FormProps = useMemo(() => {
     return {
       name: storedUser.name ?? "",
     };
@@ -72,8 +93,13 @@ export const Login = () => {
   };
 
   const handleCreateRoom = (values: FormProps) => {
+    const scale =
+      scaleType.scale === PERSONALIZED
+        ? scaleType.personalized
+        : SCALE_POINT_VALUE[scaleType.scale];
+
     create(
-      {},
+      { scale },
       {
         onSuccess(data) {
           if (data) {
@@ -157,25 +183,39 @@ export const Login = () => {
                     </>
                   )}
 
-                  <Button
-                    colorScheme="green"
-                    isLoading={isLoading}
-                    width="100%"
-                    type="button"
-                    onClick={async () => {
-                      await setTouched({ name: true }).then((e) => {
-                        if (isEmpty(e)) handleCreateRoom(values);
-                      });
-                    }}
-                  >
-                    {t("pages.login.button_create_room")}
-                  </Button>
+                  <CreateRoomActionContainer>
+                    <Button
+                      colorScheme="green"
+                      isLoading={isLoading}
+                      width="100%"
+                      type="button"
+                      onClick={async () => {
+                        await setTouched({ name: true }).then((e) => {
+                          if (isEmpty(e)) handleCreateRoom(values);
+                        });
+                      }}
+                    >
+                      {t("pages.login.button_create_room")}
+                    </Button>
+                    <IconButton
+                      icon={<PreferenceIcon />}
+                      onClick={onOpenRoomPreferences}
+                      title={t("pages.login.room_config_tooltip")}
+                    />
+                  </CreateRoomActionContainer>
                 </ActionContainer>
               </Form>
             )}
           </Formik>
         </FormContainer>
       </Content>
+
+      <RoomPreferences
+        isOpen={isOpenRoomPreferences}
+        onClose={onCloseRoomPreferences}
+        defaultScaleType={scaleType}
+        changeScaleType={setScaleType}
+      />
     </Container>
   );
 };

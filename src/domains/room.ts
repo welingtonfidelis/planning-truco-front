@@ -2,7 +2,7 @@ import { Task } from "./task";
 import { User } from "./user";
 
 export interface UserRoom extends User {
-  vote?: number | null;
+  vote?: string | null;
 }
 
 export interface Room {
@@ -13,4 +13,5 @@ export interface Room {
   showVotes: boolean;
   currentTaskId: string;
   tasks: Task[];
+  scale: string[];
 }

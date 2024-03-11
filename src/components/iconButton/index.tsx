@@ -1,4 +1,4 @@
-import { IconButton as IconButtonChakra } from "@chakra-ui/react";
+import { IconButton as IconButtonChakra, Tooltip } from "@chakra-ui/react";
 import { Container } from "./styles";
 import { Props } from "./types";
 
@@ -6,14 +6,13 @@ export const IconButton = (props: Props) => {
   const { icon, title, onClick } = props;
 
   return (
-    <Container>
+    <Tooltip label={title} hasArrow>
       <IconButtonChakra
         icon={icon}
         onClick={onClick}
-        aria-label={title}
-        title={title}
+        aria-label=""
         variant="ghost"
       />
-    </Container>
+    </Tooltip>
   );
 };

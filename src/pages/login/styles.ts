@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FaGear } from "react-icons/fa6";
 
 export const Container = styled.div`
   height: 100%;
@@ -64,4 +65,17 @@ export const ActionContainer = styled.div`
   margin-top: 1rem;
   justify-content: space-around;
   align-items: center;
+`;
+
+export const CreateRoomActionContainer = styled.div`
+  display: flex;
+  width: 100%;
+
+  button:last-of-type {
+    margin-left: .5rem;
+  }
+`;
+
+export const PreferenceIcon = styled(FaGear)`
+  fill: ${(props) => props.theme.colors.primary};
 `;

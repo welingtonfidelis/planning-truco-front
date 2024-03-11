@@ -6,6 +6,7 @@ export const light = {
     primary_hover: "#0A6174",
     secondary: "#F2388F", 
     tertiary: "#A63774", 
+    disabled_primary: "#718096",
 
     separator:"#e2e8f0",
 
