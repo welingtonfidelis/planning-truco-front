@@ -34,7 +34,10 @@
       "button_new_task": "Nova tarefa"
     },
     "user_card": {
-      "adm_room_tooltip": "Administrador da sala"
+      "button_delete_user": "Remover da sala",
+      "button_set_owner_room_user": "Novo administrador",
+      "adm_room_tooltip": "Administrador da sala",
+      "user_actions_tooltip": "Ações sobre o usuário"
     },
     "room_configuration": {
       "title": "Configurações da sala",
@@ -72,7 +75,12 @@
       "button_reset_votes": "Reiniciar jogo",
       "copy_room_link_tooltip": "Copiar link da sala",
       "edit_tasks_tooltip": "Editar tarefas",
-      "error_request_invalid_room_message": "Por favor, use o link de uma sala válida pra entrar ou crie uma."
+      "alert_title_kick_user": "Remover usuário da sala",
+      "alert_description_kick_user": "Quer realmente remover este usuário da sala?",
+      "alert_title_owner_room_transfer": "Transferir administração da sala",
+      "alert_description_owner_room_transfer": "Quer realmente tornar este usuário o novo administrador da sala?",
+      "error_request_invalid_room_message": "Por favor, use o link de uma sala válida pra entrar ou crie uma.",
+      "error_disconnect_message": "Parece que você foi desconectado. Por favor tente entrar na sala novamente ou crie uma."
     }
   },
   "generic": {

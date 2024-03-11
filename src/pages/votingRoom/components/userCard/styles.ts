@@ -1,4 +1,4 @@
-import { FaHatCowboy } from "react-icons/fa";
+import { FaHatCowboy, FaUserCog } from "react-icons/fa";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -49,11 +49,17 @@ export const Content = styled.div<{ top: number; left: number }>`
   left: ${(props) => props.left}%;
 `;
 
-export const UserName = styled.span`
-  overflow: hidden;
-  white-space: nowrap;
-  max-width: 6rem;
-  text-overflow: ellipsis;
+export const UserName = styled.div`
+  display: flex;
+  align-items: center;
+
+  span {
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 6rem;
+    text-overflow: ellipsis;
+    margin-right: 0.4rem;
+  }
 `;
 
 export const HatIcon = styled(FaHatCowboy)`
@@ -63,4 +69,8 @@ export const HatIcon = styled(FaHatCowboy)`
   :hover {
     cursor: pointer;
   }
+`;
+
+export const PreferenceIcon = styled(FaUserCog)`
+  fill: ${(props) => props.theme.colors.primary};
 `;

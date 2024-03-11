@@ -26,6 +26,8 @@ import { ApplicationStorage } from "../../shared/enum/applicationStorage";
 const { ROOT } = ApplicationRoutes;
 const { INVALID_ROOM, MISSING_ROOM } = ServerError;
 const {
+  CONNECT,
+  DISCONNECT,
   EXCEPTION,
   SERVER_ROOM_DATA,
   SERVER_ROOM_NEW_USER,
@@ -38,6 +40,7 @@ const {
   SERVER_ROOM_SHOW_VOTES,
   SERVER_ROOM_RESET_VOTES,
   SERVER_USER_UPDATE_PROFILE,
+  SERVER_OWNER_ROOM_TRANSFER,
 } = SocketEvents;
 
 const { USER } = ApplicationStorage;
@@ -64,11 +67,10 @@ export const VotingRoom = () => {
   } = roomStore();
   const { socket, createSocketConnection } = socketStore();
   const { get, set } = storage();
+  const roomIdUrl = getParams("roomId") as string;
 
   useEffect(() => {
     if (!roomId) {
-      const roomIdUrl = getParams("roomId") as string;
-
       if (roomIdUrl) {
         navigate({
           pathname: ROOT,
@@ -94,7 +96,7 @@ export const VotingRoom = () => {
   useEffect(() => {
     if (!socket) return;
 
-    socket.on("connect", () => {
+    socket.on(CONNECT, () => {
       updateUser({ id: socket.id });
 
       // ROOM
@@ -133,6 +135,12 @@ export const VotingRoom = () => {
           }
         }
       );
+
+      socket.on(SERVER_OWNER_ROOM_TRANSFER, (data: string) => {
+        const isLoggedUserOwnerRoom = socket.id === data;
+
+        updateRoom({ ownerUserId: data, isLoggedUserOwnerRoom });
+      });
 
       // TASKS
       socket.on(SERVER_ROOM_NEW_TASK, (data: Task) => {
@@ -181,6 +189,19 @@ export const VotingRoom = () => {
 
           navigate(ROOT);
         }
+      });
+
+      socket.on(DISCONNECT, () => {
+        toast({
+          title: t("pages.voting_room.error_disconnect_message"),
+          status: "error",
+          duration: null,
+        });
+
+        navigate({
+          pathname: ROOT,
+          search: createSearchParams({ roomId: roomIdUrl }).toString(),
+        });
       });
     });
   }, [socket]);
