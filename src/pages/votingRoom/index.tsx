@@ -41,6 +41,7 @@ const {
   SERVER_ROOM_RESET_VOTES,
   SERVER_USER_UPDATE_PROFILE,
   SERVER_OWNER_ROOM_TRANSFER,
+  SERVER_KICK_USER,
 } = SocketEvents;
 
 const { USER } = ApplicationStorage;
@@ -51,7 +52,7 @@ export const VotingRoom = () => {
   const { getParams } = urlParams();
   const toast = useToast();
 
-  const { name: userName, updateUser } = userStore();
+  const { name: userName, updateUser, id: userId, clearUser } = userStore();
   const {
     id: roomId,
     updateRoom,
@@ -65,7 +66,8 @@ export const VotingRoom = () => {
     showUserVotes,
     resetVotes,
   } = roomStore();
-  const { socket, createSocketConnection } = socketStore();
+  const { socket, createSocketConnection, destroySocketConnection } =
+    socketStore();
   const { get, set } = storage();
   const roomIdUrl = getParams("roomId") as string;
 
@@ -142,6 +144,26 @@ export const VotingRoom = () => {
         updateRoom({ ownerUserId: data, isLoggedUserOwnerRoom });
       });
 
+      socket.on(SERVER_KICK_USER, (data: string) => {
+        removeUser(data);
+
+        if (data === socket.id) {
+          toast({
+            title: t("pages.voting_room.error_disconnect_message"),
+            status: "error",
+            duration: null,
+          });
+
+          clearUser();
+          destroySocketConnection();
+
+          navigate({
+            pathname: ROOT,
+            search: createSearchParams({ roomId: roomIdUrl }).toString(),
+          });
+        }
+      });
+
       // TASKS
       socket.on(SERVER_ROOM_NEW_TASK, (data: Task) => {
         addTask(data);
@@ -192,12 +214,6 @@ export const VotingRoom = () => {
       });
 
       socket.on(DISCONNECT, () => {
-        toast({
-          title: t("pages.voting_room.error_disconnect_message"),
-          status: "error",
-          duration: null,
-        });
-
         navigate({
           pathname: ROOT,
           search: createSearchParams({ roomId: roomIdUrl }).toString(),
