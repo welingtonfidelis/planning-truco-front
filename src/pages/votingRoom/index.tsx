@@ -130,7 +130,7 @@ export const VotingRoom = () => {
 
           updateUserProfile(userId, profileData);
 
-          if (userId === data.userId) {
+          if (userId === socket.id) {
             const storedUser = get(USER) ?? {};
             set(USER, { ...storedUser, ...data.profileData });
             updateUser(data.profileData);
